@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-03-11T13:06:07.000Z</updated>
+  <updated>2016-03-11T16:27:19.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/03/11/markdown-start/"/>
     <id>http://yoursite.com/2016/03/11/markdown-start/</id>
     <published>2016-03-11T11:50:32.000Z</published>
-    <updated>2016-03-11T13:06:07.000Z</updated>
+    <updated>2016-03-11T16:27:19.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;We believe that writing is about content, about what you want to say – not about fancy formatting. 我们坚信写作写的是内容，所思所想，而不是花样格式。— Ulysses for Mac&lt;/p&gt;
@@ -68,7 +68,7 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;引用&quot;&gt;&lt;a href=&quot;#引用&quot; class=&quot;headerlink&quot; title=&quot;引用&quot;&gt;&lt;/a&gt;引用&lt;/h3&gt;&lt;p&gt;在需要引用的文字之前添加&lt;code&gt;&amp;gt;&lt;/code&gt;即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://32t.github.io/blogpic/comment.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/63e8a615jw1f1tdtgd70lj20r60cc0tc.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;图片与链接&quot;&gt;&lt;a href=&quot;#图片与链接&quot; class=&quot;headerlink&quot; title=&quot;图片与链接&quot;&gt;&lt;/a&gt;图片与链接&lt;/h3&gt;&lt;p&gt;插入链接与插入图片的语法很像，区别在一个 !号&lt;/p&gt;
 &lt;p&gt;图片为：&lt;br&gt;    &lt;code&gt;![](){ImgCap}{/ImgCap}&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;链接为:&lt;br&gt;    &lt;code&gt;[]()&lt;/code&gt;&lt;br&gt;插入图片的地址需要图床，这里推荐围脖图床修复计划 与 CloudApp 的服务，生成URL地址即可。&lt;/p&gt;
@@ -124,6 +124,11 @@
 &lt;pre&gt;&lt;code&gt;***
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果：&lt;/p&gt;
 &lt;hr&gt;
+&lt;h2 id=&quot;其他工具&quot;&gt;&lt;a href=&quot;#其他工具&quot; class=&quot;headerlink&quot; title=&quot;其他工具&quot;&gt;&lt;/a&gt;其他工具&lt;/h2&gt;&lt;h3 id=&quot;图床工具&quot;&gt;&lt;a href=&quot;#图床工具&quot; class=&quot;headerlink&quot; title=&quot;图床工具&quot;&gt;&lt;/a&gt;图床工具&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://weibotuchuang.sinaapp.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;围脖图床修复计划&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;  安装响应插件后，将图片拖拽上传就可以产生url，方便使用&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </content>
     
     <summary type="html">
