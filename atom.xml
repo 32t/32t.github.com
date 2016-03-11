@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-03-11T07:12:25.000Z</updated>
+  <updated>2016-03-11T07:53:06.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Computing Tech</title>
+    <title>密码学的新方向笔记</title>
     <link href="http://yoursite.com/2016/03/11/Hello-world-again/"/>
     <id>http://yoursite.com/2016/03/11/Hello-world-again/</id>
     <published>2016-03-11T06:51:12.000Z</published>
-    <updated>2016-03-11T07:12:25.000Z</updated>
+    <updated>2016-03-11T07:53:06.000Z</updated>
     
     <content type="html">&lt;p&gt;What are we doing?&lt;/p&gt;
 </content>
@@ -32,6 +32,8 @@
     
     </summary>
     
+    
+      <category term="密码学, 论文" scheme="http://yoursite.com/tags/%E5%AF%86%E7%A0%81%E5%AD%A6-%E8%AE%BA%E6%96%87/"/>
     
   </entry>
   
