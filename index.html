@@ -219,7 +219,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/11/markdown-start/">markdown-start</a>
+      <a class="article-title" href="/2016/03/11/markdown-start/">Markdown学习记录</a>
     </h1>
   
 
@@ -236,11 +236,14 @@
 <p>## 二级标题</p>
 <p>### 三级标题<br>以此类推，总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。</p>
 <h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>书写方式</p>
-<p>* 这</p>
-<p>* 是</p>
-<p>* 表</p>
-<p>* 格</p>
-<p>效果：</p>
+<pre><code>* 这
+
+* 是
+
+* 表
+
+* 格
+</code></pre><p>效果：</p>
 <ul>
 <li><p>这</p>
 </li>
@@ -252,11 +255,14 @@
 </li>
 </ul>
 <h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>书写方式</p>
-<p>\1. 这</p>
-<p>\2. 是</p>
-<p>\3. 表</p>
-<p>\4. 格</p>
-<p>效果：</p>
+<pre><code>1. 这
+
+2. 是
+
+3. 表
+
+4. 格
+</code></pre><p>效果：</p>
 <ol>
 <li><p>这</p>
 </li>
@@ -267,8 +273,63 @@
 <li><p>格</p>
 </li>
 </ol>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>在需要引用的文字之前添加>即可。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>在需要引用的文字之前添加<code>&gt;</code>即可。</p>
 <p><img src="http://32t.github.io/blogpic/comment.png" alt="image"></p>
+<h3 id="图片与链接"><a href="#图片与链接" class="headerlink" title="图片与链接"></a>图片与链接</h3><p>插入链接与插入图片的语法很像，区别在一个 !号</p>
+<p>图片为：<br>    <code>![](){ImgCap}{/ImgCap}</code></p>
+<p>链接为:<br>    <code>[]()</code><br>插入图片的地址需要图床，这里推荐围脖图床修复计划 与 CloudApp 的服务，生成URL地址即可。</p>
+<h3 id="粗体与斜体"><a href="#粗体与斜体" class="headerlink" title="粗体与斜体"></a>粗体与斜体</h3><p>Markdown 的粗体和斜体也非常简单，用两个 <em> 包含一段文本就是粗体的语法，用一个 </em> 包含一段文本就是斜体的语法。</p>
+<p>例如：<strong>这里是粗体</strong> <em>这里是斜体</em></p>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p>表格是我觉得 Markdown 比较累人的地方，例子如下：</p>
+<pre><code>| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+</code></pre><p>效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Are</th>
+<th style="text-align:right">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>col 3 is</td>
+<td style="text-align:center">right-aligned</td>
+<td style="text-align:right">$1600</td>
+</tr>
+<tr>
+<td>col 2 is</td>
+<td style="text-align:center">centered</td>
+<td style="text-align:right">$12</td>
+</tr>
+<tr>
+<td>zebra stripes</td>
+<td style="text-align:center">are neat</td>
+<td style="text-align:right">$1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="代码框"><a href="#代码框" class="headerlink" title="代码框"></a>代码框</h3><p>单行代码展示，只需要用`框起来即可：<br>代码：<br>    <code>int a = 1+1</code><br>效果如下</p>
+<p><code>int a = 1+1</code></p>
+<p>多行代码展示，需要在多行代码之前添加tab，效果如下：</p>
+<pre><code>def http_get(url):
+    success = False
+    for i in xrange(3):
+        try:
+                r = session.get(url, timeout=10)
+                if r.status_code == 200:
+                        return r.content
+        except Exception, e:
+             # logger.error(&apos;http get error: %s, url: %s&apos; % (e, url))
+</code></pre><h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><p>分割线的语法只需要三个 * 号。</p>
+<p>代码：</p>
+<pre><code>***
+</code></pre><p>效果：</p>
+<hr>
 
       
     </div>

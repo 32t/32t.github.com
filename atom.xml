@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-03-11T12:26:09.000Z</updated>
+  <updated>2016-03-11T13:06:07.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>markdown-start</title>
+    <title>Markdown学习记录</title>
     <link href="http://yoursite.com/2016/03/11/markdown-start/"/>
     <id>http://yoursite.com/2016/03/11/markdown-start/</id>
     <published>2016-03-11T11:50:32.000Z</published>
-    <updated>2016-03-11T12:26:09.000Z</updated>
+    <updated>2016-03-11T13:06:07.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;We believe that writing is about content, about what you want to say – not about fancy formatting. 我们坚信写作写的是内容，所思所想，而不是花样格式。— Ulysses for Mac&lt;/p&gt;
@@ -30,11 +30,14 @@
 &lt;p&gt;## 二级标题&lt;/p&gt;
 &lt;p&gt;### 三级标题&lt;br&gt;以此类推，总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。&lt;/p&gt;
 &lt;h3 id=&quot;列表&quot;&gt;&lt;a href=&quot;#列表&quot; class=&quot;headerlink&quot; title=&quot;列表&quot;&gt;&lt;/a&gt;列表&lt;/h3&gt;&lt;h4 id=&quot;无序列表&quot;&gt;&lt;a href=&quot;#无序列表&quot; class=&quot;headerlink&quot; title=&quot;无序列表&quot;&gt;&lt;/a&gt;无序列表&lt;/h4&gt;&lt;p&gt;书写方式&lt;/p&gt;
-&lt;p&gt;* 这&lt;/p&gt;
-&lt;p&gt;* 是&lt;/p&gt;
-&lt;p&gt;* 表&lt;/p&gt;
-&lt;p&gt;* 格&lt;/p&gt;
-&lt;p&gt;效果：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;* 这
+
+* 是
+
+* 表
+
+* 格
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;这&lt;/p&gt;
 &lt;/li&gt;
@@ -46,11 +49,14 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&quot;有序列表&quot;&gt;&lt;a href=&quot;#有序列表&quot; class=&quot;headerlink&quot; title=&quot;有序列表&quot;&gt;&lt;/a&gt;有序列表&lt;/h4&gt;&lt;p&gt;书写方式&lt;/p&gt;
-&lt;p&gt;\1. 这&lt;/p&gt;
-&lt;p&gt;\2. 是&lt;/p&gt;
-&lt;p&gt;\3. 表&lt;/p&gt;
-&lt;p&gt;\4. 格&lt;/p&gt;
-&lt;p&gt;效果：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1. 这
+
+2. 是
+
+3. 表
+
+4. 格
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;这&lt;/p&gt;
 &lt;/li&gt;
@@ -61,8 +67,63 @@
 &lt;li&gt;&lt;p&gt;格&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;引用&quot;&gt;&lt;a href=&quot;#引用&quot; class=&quot;headerlink&quot; title=&quot;引用&quot;&gt;&lt;/a&gt;引用&lt;/h3&gt;&lt;p&gt;在需要引用的文字之前添加&gt;即可。&lt;/p&gt;
+&lt;h3 id=&quot;引用&quot;&gt;&lt;a href=&quot;#引用&quot; class=&quot;headerlink&quot; title=&quot;引用&quot;&gt;&lt;/a&gt;引用&lt;/h3&gt;&lt;p&gt;在需要引用的文字之前添加&lt;code&gt;&amp;gt;&lt;/code&gt;即可。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://32t.github.io/blogpic/comment.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;图片与链接&quot;&gt;&lt;a href=&quot;#图片与链接&quot; class=&quot;headerlink&quot; title=&quot;图片与链接&quot;&gt;&lt;/a&gt;图片与链接&lt;/h3&gt;&lt;p&gt;插入链接与插入图片的语法很像，区别在一个 !号&lt;/p&gt;
+&lt;p&gt;图片为：&lt;br&gt;    &lt;code&gt;![](){ImgCap}{/ImgCap}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;链接为:&lt;br&gt;    &lt;code&gt;[]()&lt;/code&gt;&lt;br&gt;插入图片的地址需要图床，这里推荐围脖图床修复计划 与 CloudApp 的服务，生成URL地址即可。&lt;/p&gt;
+&lt;h3 id=&quot;粗体与斜体&quot;&gt;&lt;a href=&quot;#粗体与斜体&quot; class=&quot;headerlink&quot; title=&quot;粗体与斜体&quot;&gt;&lt;/a&gt;粗体与斜体&lt;/h3&gt;&lt;p&gt;Markdown 的粗体和斜体也非常简单，用两个 &lt;em&gt; 包含一段文本就是粗体的语法，用一个 &lt;/em&gt; 包含一段文本就是斜体的语法。&lt;/p&gt;
+&lt;p&gt;例如：&lt;strong&gt;这里是粗体&lt;/strong&gt; &lt;em&gt;这里是斜体&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&quot;表格&quot;&gt;&lt;a href=&quot;#表格&quot; class=&quot;headerlink&quot; title=&quot;表格&quot;&gt;&lt;/a&gt;表格&lt;/h3&gt;&lt;p&gt;表格是我觉得 Markdown 比较累人的地方，例子如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tables&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;Are&lt;/th&gt;
+&lt;th style=&quot;text-align:right&quot;&gt;Cool&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;col 3 is&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;right-aligned&lt;/td&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;$1600&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;col 2 is&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;centered&lt;/td&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;$12&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;zebra stripes&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;are neat&lt;/td&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;$1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&quot;代码框&quot;&gt;&lt;a href=&quot;#代码框&quot; class=&quot;headerlink&quot; title=&quot;代码框&quot;&gt;&lt;/a&gt;代码框&lt;/h3&gt;&lt;p&gt;单行代码展示，只需要用`框起来即可：&lt;br&gt;代码：&lt;br&gt;    &lt;code&gt;int a = 1+1&lt;/code&gt;&lt;br&gt;效果如下&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;int a = 1+1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;多行代码展示，需要在多行代码之前添加tab，效果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def http_get(url):
+    success = False
+    for i in xrange(3):
+        try:
+                r = session.get(url, timeout=10)
+                if r.status_code == 200:
+                        return r.content
+        except Exception, e:
+             # logger.error(&amp;apos;http get error: %s, url: %s&amp;apos; % (e, url))
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;分割线&quot;&gt;&lt;a href=&quot;#分割线&quot; class=&quot;headerlink&quot; title=&quot;分割线&quot;&gt;&lt;/a&gt;分割线&lt;/h3&gt;&lt;p&gt;分割线的语法只需要三个 * 号。&lt;/p&gt;
+&lt;p&gt;代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;***
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果：&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
