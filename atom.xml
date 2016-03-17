@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-03-11T16:32:07.000Z</updated>
+  <updated>2016-03-17T08:17:12.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RMBP13涂层脱落换屏记</title>
+    <link href="http://yoursite.com/2016/03/17/rmbp13-screen-fix/"/>
+    <id>http://yoursite.com/2016/03/17/rmbp13-screen-fix/</id>
+    <published>2016-03-17T08:11:21.000Z</published>
+    <updated>2016-03-17T08:17:12.000Z</updated>
+    
+    <content type="html">&lt;p&gt;之前就听说13款的RMBP反光涂层掉落的问题，当时也没太注意，擦屏幕的方法也比较暴力，直到前两天自己也中了招，一擦之下涂层尽落，再擦一下，落得更多，于是开始了漫漫换屏路。在此记录一下，给同样问题的小伙伴参考。&lt;/p&gt;
+&lt;h2 id=&quot;预约Genius-Bar&quot;&gt;&lt;a href=&quot;#预约Genius-Bar&quot; class=&quot;headerlink&quot; title=&quot;预约Genius Bar&quot;&gt;&lt;/a&gt;预约Genius Bar&lt;/h2&gt;&lt;p&gt;首先给400-666-8800打了电话，在说明了问题后，对方会询问序列号和购买时间，同时也会问购买凭证是否还在（实际上用不到），由于涂层脱落问题苹果官方是可以免费换屏的，于是让客服帮忙预约了西单大悦城的genius bar，并记录了邮箱、姓名和电话。&lt;/p&gt;
+&lt;h2 id=&quot;去Genius-Bar维修&quot;&gt;&lt;a href=&quot;#去Genius-Bar维修&quot; class=&quot;headerlink&quot; title=&quot;去Genius Bar维修&quot;&gt;&lt;/a&gt;去Genius Bar维修&lt;/h2&gt;&lt;p&gt;提前签到后就是等待了，维修的MM看了屏幕，然后问有没有备份数据（建议大家最好备份一下），开具了维修单并表示两个小时后可以来取。&lt;/p&gt;
+&lt;p&gt;然后意外发生了，闲逛磨蹭期间接到维修部门的电话，工程师表示“我们拆机后发现您的主板没有序列号，我们拒绝维修”，我询问了为什么没有序列号以及应该找谁处理问题的时候，该工程师态度很差的说“根据规定，我们拒绝维修”，于是懵比的回来取机器。&lt;/p&gt;
+&lt;p&gt;排队了半天，终于有个小蓝人出来给我解释了一下，表示他们也没有遇到过相关情况，因为机器也没有之前的购买记录，激活也是我第一次激活，他们需要向上级部门请示看能否维修，只能第二天上午看上级回复后解决，不过可能需要提供购买凭证，如果需要的话可以以拍照的形式传给他们。给出了我两个选择，要么拿回机器不维修，要么等第二天，作为一个码农只能舍弃半天的敲代码时间，留下了机器。&lt;/p&gt;
+&lt;h2 id=&quot;客服答复&quot;&gt;&lt;a href=&quot;#客服答复&quot; class=&quot;headerlink&quot; title=&quot;客服答复&quot;&gt;&lt;/a&gt;客服答复&lt;/h2&gt;&lt;p&gt;第二天上午十点多先给400官方客服打电话咨询情况，询问一下如果主板序列号不存在应该怎么处理，能否让400协商，400表示硬件问题国内最高的权限就是直营店，如果直营店维修人员处理不了，可以咨询店长。于是转而给大悦城的客服打电话咨询维修进度，相关客服表示正在上报，只能根据上级反馈来决定，不过该客服同时表示这种情况一般没问题，最多需要提供购买凭证也可以解决（同时也吐槽了一把序列号写入程序，说可能相关程序bug了）。挂掉电话后就接到了维修部门的电话表示经过他们检测序列号一致，可以维修（WTF？），下午三点前去取即可。&lt;/p&gt;
+&lt;p&gt;##取回机器&lt;br&gt;带上身份证和维修单即可取回。&lt;/p&gt;
+&lt;p&gt;第一次写这种类型的文章，有点流水账了，总结一下，&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;预约天才吧&lt;/li&gt;
+&lt;li&gt;带上机器和身份证去维修（一般两个小时内就可以取，所以直接带上身份证就行了）&lt;/li&gt;
+&lt;li&gt;带上身份证和维修单去取机器&lt;/li&gt;
+&lt;li&gt;如果有购买凭证的最好带上，以防出现其他问题来回折腾。&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前就听说13款的RMBP反光涂层掉落的问题，当时也没太注意，擦屏幕的方法也比较暴力，直到前两天自己也中了招，一擦之下涂层尽落，再擦一下，落得更多，于是开始了漫漫换屏路。在此记录一下，给同样问题的小伙伴参考。&lt;/p&gt;
+&lt;h2 id=&quot;预约Genius-Bar&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+    
+      <category term="RMBP13, 涂层脱落, Genius Bar" scheme="http://yoursite.com/tags/RMBP13-%E6%B6%82%E5%B1%82%E8%84%B1%E8%90%BD-Genius-Bar/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mongo性能调优</title>
+    <link href="http://yoursite.com/2016/03/15/mongo-optimization/"/>
+    <id>http://yoursite.com/2016/03/15/mongo-optimization/</id>
+    <published>2016-03-15T08:11:20.000Z</published>
+    <updated>2016-03-15T08:40:57.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;最近公司在做海外业务的拓展，我负责了海外数据的抓取、分析和接口工作，随着开发的推进和数据量的增加&lt;/p&gt;
+&lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;调优方案&quot;&gt;&lt;a href=&quot;#调优方案&quot; class=&quot;headerlink&quot; title=&quot;调优方案&quot;&gt;&lt;/a&gt;调优方案&lt;/h2&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;最近公司在做海外业务的拓展，我负责了海外数据的抓取、分析和接口工作，随着开发的推进和数据量的增加&lt;/p&gt;
+&lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="monogodb,性能" scheme="http://yoursite.com/tags/monogodb-%E6%80%A7%E8%83%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>Markdown学习记录</title>
