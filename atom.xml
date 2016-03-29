@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://32t.github.io/"/>
-  <updated>2016-03-19T16:08:44.000Z</updated>
+  <updated>2016-03-29T05:22:53.000Z</updated>
   <id>http://32t.github.io/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何在 Django 中设置静态文件</title>
+    <link href="http://32t.github.io/2016/03/29/how-to-server-django-static-file/"/>
+    <id>http://32t.github.io/2016/03/29/how-to-server-django-static-file/</id>
+    <published>2016-03-29T04:32:36.000Z</published>
+    <updated>2016-03-29T05:22:53.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;在使用 Django 建设网站的过程中通常需要提供其他一些静态文件，例如 css,js,img 等，然而众所周知，django 无法像 apache 或者 iis 一样直接放上去就可以用，成为了众多新手的一大门槛，笔者也是被折磨了多次。花了一上午时间深入研究了 Django 相关官方文档，记录下来顺便整理一下。&lt;/p&gt;
+&lt;h2 id=&quot;静态文件提供的两种方式&quot;&gt;&lt;a href=&quot;#静态文件提供的两种方式&quot; class=&quot;headerlink&quot; title=&quot;静态文件提供的两种方式&quot;&gt;&lt;/a&gt;静态文件提供的两种方式&lt;/h2&gt;&lt;p&gt;Django 提供了 django.contrib.staticfiles 来帮助用户管理静态文件。&lt;/p&gt;
+&lt;h3 id=&quot;APP-内部文件&quot;&gt;&lt;a href=&quot;#APP-内部文件&quot; class=&quot;headerlink&quot; title=&quot;APP 内部文件&quot;&gt;&lt;/a&gt;APP 内部文件&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;确保django.contrib.staticfiles 在 settting 文件的 INSTALLED_APPS中&lt;/li&gt;
+&lt;li&gt;在 setting 文件中，定义变量 STATIC_URL&lt;br&gt; STATIC_URL = ‘/static/‘&lt;/li&gt;
+&lt;li&gt;在 my_site/my_app/目录下新建文件夹static/my_app/ 然后在其下面存放文件 myexample.jpg文件&lt;/li&gt;
+&lt;li&gt;在模板中使用的时候，可以有两种使用方式&lt;ol&gt;
+&lt;li&gt;硬编码&lt;br&gt;直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2&lt;br&gt;目录结构如下：&lt;br&gt;my_app1&lt;br&gt;-static&lt;br&gt;—my_app&lt;br&gt;—–myexample.jpg&lt;br&gt;my_app2&lt;br&gt;-static&lt;br&gt;—my_app&lt;br&gt;—–myexample.jpg&lt;br&gt;那么这样使用的时候，会直接使用第一个目录下的文件&lt;/li&gt;
+&lt;li&gt;软编码&lt;br&gt;也可以使用 static 模板标签来根据相对路径生成 url.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;全局文件&quot;&gt;&lt;a href=&quot;#全局文件&quot; class=&quot;headerlink&quot; title=&quot;全局文件&quot;&gt;&lt;/a&gt;全局文件&lt;/h3&gt;&lt;h3 id=&quot;Django查找静态文件的顺序问题&quot;&gt;&lt;a href=&quot;#Django查找静态文件的顺序问题&quot; class=&quot;headerlink&quot; title=&quot;Django查找静态文件的顺序问题&quot;&gt;&lt;/a&gt;Django查找静态文件的顺序问题&lt;/h3&gt;&lt;p&gt;首先会查找各个 app 下面的 STATIC_URL 文件所指定的目录&lt;/p&gt;
+&lt;h3 id=&quot;命名空间-namespace-的问题&quot;&gt;&lt;a href=&quot;#命名空间-namespace-的问题&quot; class=&quot;headerlink&quot; title=&quot;命名空间 namespace 的问题&quot;&gt;&lt;/a&gt;命名空间 namespace 的问题&lt;/h3&gt;&lt;h2 id=&quot;测试环境中使用&quot;&gt;&lt;a href=&quot;#测试环境中使用&quot; class=&quot;headerlink&quot; title=&quot;测试环境中使用&quot;&gt;&lt;/a&gt;测试环境中使用&lt;/h2&gt;&lt;h2 id=&quot;生产环境中使用&quot;&gt;&lt;a href=&quot;#生产环境中使用&quot; class=&quot;headerlink&quot; title=&quot;生产环境中使用&quot;&gt;&lt;/a&gt;生产环境中使用&lt;/h2&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;在使用 Django 建设网站的过程中通常需要提供其他一些静态文件，例如 css,js,img 等，然而众所周知，django 无法像 ap
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>RMBP13涂层脱落换屏记</title>
