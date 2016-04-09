@@ -15,7 +15,10 @@
 <meta property="og:description" content="前言&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
 &amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web">
 <meta property="og:image" content="http://www.nowamagic.net/librarys/images/201309/2013_09_04_01.png">
-<meta property="og:updated_time" content="2016-04-09T09:50:40.000Z">
+<meta property="og:image" content="http://www.nowamagic.net/librarys/images/201309/2013_09_05_01.png">
+<meta property="og:image" content="http://www.nowamagic.net/librarys/images/201309/2013_09_05_02.png">
+<meta property="og:image" content="http://www.nowamagic.net/librarys/images/201309/2013_09_05_03.png">
+<meta property="og:updated_time" content="2016-04-09T11:18:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx+uWSGI+Django 配置">
 <meta name="twitter:description" content="前言&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
@@ -85,7 +88,7 @@
 						<li>Links</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -281,7 +284,9 @@
 <p>现在我们试下将 Django 跑起来。我们先在 virtualenv 创建一个 Django Project：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@nowamagic ~]# cd nowamagic_venv</span><br><span class="line">[root@nowamagic nowamagic_venv]# source bin/activate</span><br><span class="line">(nowamagic_venv)[root@nowamagic nowamagic_venv]# django-admin.py startproject nowamagic_pj</span><br></pre></td></tr></table></figure>
 <p>virtualenv 的路径与目录文件如下：</p>
+<p><img src="http://www.nowamagic.net/librarys/images/201309/2013_09_05_01.png" alt="virtualenv 的路径与目录文件"></p>
 <p>Django Project 的路径与目录文件如下：</p>
+<p><img src="http://www.nowamagic.net/librarys/images/201309/2013_09_05_02.png" alt="Django Project 的路径与目录文件"></p>
 <h3 id="测试uwsgi"><a href="#测试uwsgi" class="headerlink" title="测试uwsgi"></a>测试uwsgi</h3><p>在你的服务器上写一个test.py：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># test.py</span><br><span class="line"></span><br><span class="line">def application(env, start_response):</span><br><span class="line">    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;,&apos;text/html&apos;)])</span><br><span class="line">    return &quot;Hello World&quot;</span><br></pre></td></tr></table></figure>
 <p>我的 test.py 的路径是 /root/nowamagic_venv/nowamagic_pj/test.py，执行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@nowamagic ~]# cd nowamagic_venv</span><br><span class="line">[root@nowamagic nowamagic_venv]# source bin/activate</span><br><span class="line">(nowamagic_venv)[root@nowamagic nowamagic_venv]# uwsgi --http :8001 --wsgi-file /root/nowamagic_venv/nowamagic_pj/test.py</span><br></pre></td></tr></table></figure></p>
@@ -289,14 +294,47 @@
 <h3 id="测试你的-Django-项目"><a href="#测试你的-Django-项目" class="headerlink" title="测试你的 Django 项目"></a>测试你的 Django 项目</h3><p>前面我们用 django-admin.py startproject nowamagic_pj 创建了一个项目，现在我们用 Django 自带的 Web 服务器看看我们的项目有没出问题。还是进入我们虚拟环境：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@nowamagic ~]# cd nowamagic_venv</span><br><span class="line">[root@nowamagic nowamagic_venv]# source bin/activate</span><br><span class="line">(nowamagic_venv)[root@nowamagic nowamagic_venv]# python2.7 /root/nowamagic_venv/nowamagic_pj/manage.py runserver 0.0.0.0:8002</span><br></pre></td></tr></table></figure>
 <p>OK，启动 Django 自带的服务器了，我们再访问 <a href="http://115.28.0.89:8002/" target="_blank" rel="external">http://115.28.0.89:8002/</a>，成功显示：</p>
+<p><img src="http://www.nowamagic.net/librarys/images/201309/2013_09_05_03.png" alt="正确显示"></p>
 <p>说明 Djanggo 项目也没问题。</p>
 <h3 id="连接Django和uwsgi"><a href="#连接Django和uwsgi" class="headerlink" title="连接Django和uwsgi"></a>连接Django和uwsgi</h3><p>最后一步了，我们要把uwsgi与Django连接起来。</p>
 <p>编写django_wsgi.py文件，将其放在与文件manage.py同一个目录下。我的放在 /root/nowamagic_venv/nowamagic_pj/ 下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"></span><br><span class="line"># coding: utf-8</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line"># 将系统的编码设置为UTF8</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(&apos;utf8&apos;)</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;nowamagic_pj.settings&quot;)</span><br><span class="line">from django.core.handlers.wsgi import WSGIHandler</span><br><span class="line">application = WSGIHandler()</span><br></pre></td></tr></table></figure>
-<p>注意不要直接 copy，有个地方要改：注意到语句os.environ.setdefault。比如我的项目为nowamagic_pj，则语句应该是 os.environ.setdefault(“DJANGO_SETTINGS_MODULE”, “nowamagic_pj.settings”)<br>OK，进入虚拟环境执行指令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@nowamagic ~]# cd nowamagic_venv</span><br><span class="line">[root@nowamagic nowamagic_venv]# source bin/activate</span><br><span class="line">(nowamagic_venv)[root@nowamagic nowamagic_venv]# uwsgi --http :8000 --chdir /root/nowamagic_venv/nowamagic_pj/ --module django_wsgi</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意不要直接 copy，有个地方要改：注意到语句os.environ.setdefault。比如我的项目为nowamagic_pj，则语句应该是 os.environ.setdefault(“DJANGO_SETTINGS_MODULE”, “nowamagic_pj.settings”)</p>
+</blockquote>
+<p>OK，进入虚拟环境执行指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@nowamagic ~]# cd nowamagic_venv</span><br><span class="line">[root@nowamagic nowamagic_venv]# source bin/activate</span><br><span class="line">(nowamagic_venv)[root@nowamagic nowamagic_venv]# uwsgi --http :8000 --chdir /root/nowamagic_venv/nowamagic_pj/ --module django_wsgi</span><br></pre></td></tr></table></figure>
 <p>成功显示 Django It Works 页面。</p>
 <p>这样，你就可以在浏览器中访问你的Django程序了。所有的请求都是经过uwsgi传递给Django程序的。</p>
 <p>这里我们介绍了如何把uwsgi与Django连接起来。</p>
+<h2 id="Nginx-uWSGI-Django"><a href="#Nginx-uWSGI-Django" class="headerlink" title="Nginx+uWSGI+Django"></a>Nginx+uWSGI+Django</h2><p>先安装 Nginx，可以直接用 apt-get 安装</p>
+<h3 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h3><p>在 nginx.conf 上加入/修改，我的 server 配置如下（一切从简……）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen       80;</span><br><span class="line">server_name  115.28.0.89;</span><br><span class="line">#server_name localhost;</span><br><span class="line">access_log /home/nowamagic/logs/access.log;</span><br><span class="line">error_log /home/nowamagic/logs/error.log;</span><br><span class="line">#root         /root/nowamagic_venv/nowamagic_pj;</span><br><span class="line">location / &#123;</span><br><span class="line">    uwsgi_pass 127.0.0.1:8077;</span><br><span class="line">    #include uwsgi_params;</span><br><span class="line">    include /etc/nginx/uwsgi_params;</span><br><span class="line">    #uwsgi_pass 127.0.0.1:8077;</span><br><span class="line">    #uwsgi_param UWSGI_SCRIPT index;</span><br><span class="line">    #uwsgi_param UWSGI_PYHOME $document_root;</span><br><span class="line">    #uwsgi_param UWSGI_CHDIR  $document_root;</span><br><span class="line">&#125;</span><br><span class="line">access_log off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意保证配置里写的目录 /home/nowamagic/logs/ 和 /home/nowamagic/logs/ 存在，接下来就没啥问题了，Nginx 配置很简单。</p>
+<h3 id="uWSGI-配置"><a href="#uWSGI-配置" class="headerlink" title="uWSGI 配置"></a>uWSGI 配置</h3><p>前面我们是直接使用命令行来启动 uWSGI，在实际部署环境中，我们常用的是配置文件的方式，而非命令行的方式。</p>
+<p>我的 Django 程序目录：/root/nowamagic_venv/nowamagic_pj/</p>
+<p>这里让 Nginx 采用 8077 端口与 uWSGI 通讯，请确保此端口没有被其它程序采用。</p>
+<p>uWSGI 支持多种配置文件格式，比如 xml，ini，json 等等都可以。</p>
+<h4 id="xml-配置"><a href="#xml-配置" class="headerlink" title="xml 配置"></a>xml 配置</h4><p>请确定你在上一节中的django_wsgi.py文件已经存在了。新建一个XML文件：nowamagic_pj.xml，将它放在 /root/nowamagic_venv/nowamagic_pj 目录下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;uwsgi&gt;</span><br><span class="line"> &lt;socket&gt;127.0.0.1:8077&lt;/socket&gt;</span><br><span class="line"> &lt;listen&gt;80&lt;/listen&gt;</span><br><span class="line"> &lt;master&gt;true&lt;/master&gt;</span><br><span class="line"> &lt;pythonpath&gt;/root/nowamagic_venv/nowamagic_pj&lt;/pythonpath&gt;</span><br><span class="line"> &lt;processes&gt;1&lt;/processes&gt;</span><br><span class="line"> &lt;logdate&gt;true&lt;/logdate&gt;</span><br><span class="line"> &lt;daemonize&gt;/var/log/uwsgi.log&lt;/daemonize&gt;</span><br><span class="line"> &lt;plugins&gt;python&lt;/plugins&gt;</span><br><span class="line">&lt;/uwsgi&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi -x /root/nowamagic_venv/nowamagic_pj/nowamagic_pj.xml</span><br></pre></td></tr></table></figure></p>
+<p>or<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/uwsgi -x /root/nowamagic_venv/nowamagic_pj/nowamagic_pj.xml</span><br></pre></td></tr></table></figure></p>
+<p>加载指定的xml配置文件。当使用命令行参数时，可以使用简化命令“-x”。当然也可以不简写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --xml /etc/nowamagic.xml</span><br></pre></td></tr></table></figure>
+<p>甚至如果在命令行的最后一个参数以“.xml”结尾，那么就隐含将加载该xml文件作为配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi /etc/nowamagic.xml</span><br></pre></td></tr></table></figure>
+<p>有时候因各种环境问题，<code>-x --xml</code> 命令识别不了，可以使用下面的 ini 配置方式：</p>
+<h4 id="ini-配置"><a href="#ini-配置" class="headerlink" title="ini 配置"></a>ini 配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">vhost = false</span><br><span class="line">plugins = python</span><br><span class="line">socket = 127.0.0.1:8077</span><br><span class="line">master = true</span><br><span class="line">enable-threads = true</span><br><span class="line">workers = 1</span><br><span class="line">wsgi-file = /root/nowamagic_venv/nowamagic_pj/nowamagic_pj/wsgi.py</span><br><span class="line">virtualenv = /root/nowamagic_venv</span><br><span class="line">chdir = /root/nowamagic_venv/nowamagic_pj</span><br></pre></td></tr></table></figure>
+<p>然后执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --ini /root/nowamagic_venv/nowamagic_pj.ini &amp; uwsgi</span><br></pre></td></tr></table></figure>
+<p>这样就启动起来了。如果无意外的话，就能在网上访问你的 Python 项目了。</p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p>一些我在配置时用到的命令，省得你去搜索：</p>
+<ol>
+<li><p>关闭 uWSGI：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">killall  -9 uwsgi</span><br><span class="line">killall -s HUP /var/www/uwsgi</span><br><span class="line">killall -s HUP /usr/local/bin/uwsgi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列出端口占用情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lpnt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
