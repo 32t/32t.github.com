@@ -79,7 +79,7 @@
 						<li>Links</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -206,6 +206,66 @@
 
       <div class="body-wrap">
   
+    <article id="post-nginx_uwgsi_django" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/09/nginx_uwgsi_django/" class="article-date">
+  	<time datetime="2016-04-09T09:50:32.000Z" itemprop="datePublished">2016-04-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/09/nginx_uwgsi_django/">Nginx+uWSGI+Django 配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&#160; &#160; &#160; &#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。</p>
+<p>&#160; &#160; &#160; &#160;在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Django 处理，Django 处理返回结果由 uWSGI 发给 Nginx，并返回给用户。可见，uWSGI的作用就类似一个桥接器。起到桥梁的作用。</p>
+<blockquote>
+<p>不使用Nginx，只使用uWSGI+Django也是可以实现WEB服务的。uWSGI也可以直接处理WEB请求</p>
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/09/nginx_uwgsi_django/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-how-to-server-django-static-file" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -238,8 +298,12 @@
 <li>确保django.contrib.staticfiles 在 settting 文件的 INSTALLED_APPS中</li>
 <li>在 setting 文件中，定义变量 STATIC_URL<br> STATIC_URL = ‘/static/‘</li>
 <li>在 my_site/my_app/目录下新建文件夹static/my_app/ 然后在其下面存放文件 myexample.jpg文件</li>
-<li>在模板中使用的时候，可以有两种使用方式<ol>
-<li>硬编码<br>直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2<br>目录结构如下：<br>my_app1<br>-static<br>—my_app<br>—–myexample.jpg<br>my_app2<br>-static<br>—my_app<br>—–myexample.jpg<br>那么这样使用的时候，会直接使用第一个目录下的文件</li>
+<li><p>在模板中使用的时候，可以有两种使用方式</p>
+<ol>
+<li>硬编码<br>直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2<br>目录结构如下：<br>my_app1<br>-static<br>—my_app<br>—–myexample.jpg<br>my_app2<br>-static<br>—my_app<br>—–myexample.jpg</li>
+</ol>
+<p>那么这样使用的时候，会直接使用第一个目录下的文件</p>
+<ol>
 <li>软编码<br>也可以使用 static 模板标签来根据相对路径生成 url.</li>
 </ol>
 </li>

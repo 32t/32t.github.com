@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="32bits">
 <meta property="og:description" content="背景在使用 Django 建设网站的过程中通常需要提供其他一些静态文件，例如 css,js,img 等，然而众所周知，django 无法像 apache 或者 iis 一样直接放上去就可以用，成为了众多新手的一大门槛，笔者也是被折磨了多次。花了一上午时间深入研究了 Django 相关官方文档，记录下来顺便整理一下。
 静态文件提供的两种方式Django 提供了 django.contrib.stat">
-<meta property="og:updated_time" content="2016-03-29T05:22:53.000Z">
+<meta property="og:updated_time" content="2016-04-09T08:57:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在 Django 中设置静态文件">
 <meta name="twitter:description" content="背景在使用 Django 建设网站的过程中通常需要提供其他一些静态文件，例如 css,js,img 等，然而众所周知，django 无法像 apache 或者 iis 一样直接放上去就可以用，成为了众多新手的一大门槛，笔者也是被折磨了多次。花了一上午时间深入研究了 Django 相关官方文档，记录下来顺便整理一下。
@@ -83,7 +83,7 @@
 						<li>Links</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -247,8 +247,12 @@
 <li>确保django.contrib.staticfiles 在 settting 文件的 INSTALLED_APPS中</li>
 <li>在 setting 文件中，定义变量 STATIC_URL<br> STATIC_URL = ‘/static/‘</li>
 <li>在 my_site/my_app/目录下新建文件夹static/my_app/ 然后在其下面存放文件 myexample.jpg文件</li>
-<li>在模板中使用的时候，可以有两种使用方式<ol>
-<li>硬编码<br>直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2<br>目录结构如下：<br>my_app1<br>-static<br>—my_app<br>—–myexample.jpg<br>my_app2<br>-static<br>—my_app<br>—–myexample.jpg<br>那么这样使用的时候，会直接使用第一个目录下的文件</li>
+<li><p>在模板中使用的时候，可以有两种使用方式</p>
+<ol>
+<li>硬编码<br>直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2<br>目录结构如下：<br>my_app1<br>-static<br>—my_app<br>—–myexample.jpg<br>my_app2<br>-static<br>—my_app<br>—–myexample.jpg</li>
+</ol>
+<p>那么这样使用的时候，会直接使用第一个目录下的文件</p>
+<ol>
 <li>软编码<br>也可以使用 static 模板标签来根据相对路径生成 url.</li>
 </ol>
 </li>
@@ -262,6 +266,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/04/09/nginx_uwgsi_django/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Nginx+uWSGI+Django 配置
+        
+      </div>
+    </a>
   
   
     <a href="/2016/03/17/rmbp13-screen-fix/" id="article-nav-older" class="article-nav-link-wrap">

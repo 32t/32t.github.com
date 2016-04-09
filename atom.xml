@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://32t.github.io/"/>
-  <updated>2016-03-29T05:22:53.000Z</updated>
+  <updated>2016-04-09T09:31:11.000Z</updated>
   <id>http://32t.github.io/</id>
   
   <author>
@@ -16,11 +16,65 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Nginx+uWSGI+Django 配置</title>
+    <link href="http://32t.github.io/2016/04/09/nginx_uwgsi_django/"/>
+    <id>http://32t.github.io/2016/04/09/nginx_uwgsi_django/</id>
+    <published>2016-04-09T09:50:32.000Z</published>
+    <updated>2016-04-09T09:31:11.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Django 处理，Django 处理返回结果由 uWSGI 发给 Nginx，并返回给用户。可见，uWSGI的作用就类似一个桥接器。起到桥梁的作用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不使用Nginx，只使用uWSGI+Django也是可以实现WEB服务的。uWSGI也可以直接处理WEB请求&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;uwsgi、uWSGI、WSGI的区别&quot;&gt;&lt;a href=&quot;#uwsgi、uWSGI、WSGI的区别&quot; class=&quot;headerlink&quot; title=&quot;uwsgi、uWSGI、WSGI的区别&quot;&gt;&lt;/a&gt;uwsgi、uWSGI、WSGI的区别&lt;/h1&gt;&lt;h2 id=&quot;WSGI&quot;&gt;&lt;a href=&quot;#WSGI&quot; class=&quot;headerlink&quot; title=&quot;WSGI&quot;&gt;&lt;/a&gt;WSGI&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;&lt;br&gt;很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 Nginx 做 uwsgi 。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;也就是说，WSGI就像是一座桥梁，一边连着web服务器，另一边连着用户的应用。但是呢，这个桥的功能很弱，有时候还需要别的桥来帮忙才能进行处理。WSGI 的作用如图所示：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.nowamagic.net/librarys/images/201309/2013_09_04_01.png&quot; alt=&quot;WSGI 的作用&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;WSGI的作用&quot;&gt;&lt;a href=&quot;#WSGI的作用&quot; class=&quot;headerlink&quot; title=&quot;WSGI的作用&quot;&gt;&lt;/a&gt;WSGI的作用&lt;/h3&gt;&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;&lt;br&gt;WSGI有两方：“服务器”或“网关”一方，以及“应用程序”或“应用框架”一方。服务方调用应用方，提供环境信息，以及一个回调函数（提供给应用程序用来将消息头传递给服务器方），并接收Web内容作为返回值。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;&lt;br&gt;所谓的 WSGI中间件同时实现了API的两方，因此可以在WSGI服务和WSGI应用之间起调解作用：从WSGI服务器的角度来说，中间件扮演应用程序，而从应用程序的角度来说，中间件扮演服务器。“中间件”组件可以执行以下功能：&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;&lt;br&gt;重写环境变量后，根据目标URL，将请求消息路由到不同的应用对象。&lt;br&gt;允许在一个进程中同时运行多个应用程序或应用框架。&lt;br&gt;负载均衡和远程处理，通过在网络上转发请求和响应消息。&lt;br&gt;进行内容后处理，例如应用XSLT样式表。&lt;br&gt;WSGI 的设计确实参考了 Java 的 servlet。&lt;a href=&quot;http://www.python.org/dev/peps/pep-0333/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python 开发者文档中&lt;/a&gt;有这么一段话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;By contrast, although Java has just as many web application frameworks available, Java’s “servlet” API makes it possible for applications written with any Java web application framework to run in any web server that supports the servlet API.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;uWSGI-和-uwsgi&quot;&gt;&lt;a href=&quot;#uWSGI-和-uwsgi&quot; class=&quot;headerlink&quot; title=&quot;uWSGI 和 uwsgi&quot;&gt;&lt;/a&gt;uWSGI 和 uwsgi&lt;/h3&gt;&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;uWSGI是一个Web服务器，它实现了WSGI协议、uwsgi、http等协议。Nginx中HttpUwsgiModule的作用是与uWSGI服务器进行交换。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;要注意 WSGI / uwsgi / uWSGI 这三个概念的区分。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSGI看过前面小节的同学很清楚了，是一种通信协议。&lt;/li&gt;
+&lt;li&gt;uwsgi同WSGI一样是一种通信协议。&lt;/li&gt;
+&lt;li&gt;而uWSGI是实现了uwsgi和WSGI两种协议的Web服务器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;uwsgi协议是一个uWSGI服务器自有的协议，它用于定义传输信息的类型（type of information），每一个uwsgi packet前4byte为传输信息类型描述，它与WSGI相比是两样东西。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;关于uwsgi协议看这里：The uwsgi protocol。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;为什么有了uWSGI为什么还需要Nginx？因为Nginx具备优秀的静态内容处理能力，然后将动态内容转发给uWSGI服务器，这样可以达到很好的客户端响应。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。&lt;/p&gt;
+&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Django 处理，Django 处理返回结果由 uWSGI 发给 Nginx，并返回给用户。可见，uWSGI的作用就类似一个桥接器。起到桥梁的作用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不使用Nginx，只使用uWSGI+Django也是可以实现WEB服务的。uWSGI也可以直接处理WEB请求&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>如何在 Django 中设置静态文件</title>
     <link href="http://32t.github.io/2016/03/29/how-to-server-django-static-file/"/>
     <id>http://32t.github.io/2016/03/29/how-to-server-django-static-file/</id>
     <published>2016-03-29T04:32:36.000Z</published>
-    <updated>2016-03-29T05:22:53.000Z</updated>
+    <updated>2016-04-09T08:57:50.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;在使用 Django 建设网站的过程中通常需要提供其他一些静态文件，例如 css,js,img 等，然而众所周知，django 无法像 apache 或者 iis 一样直接放上去就可以用，成为了众多新手的一大门槛，笔者也是被折磨了多次。花了一上午时间深入研究了 Django 相关官方文档，记录下来顺便整理一下。&lt;/p&gt;
 &lt;h2 id=&quot;静态文件提供的两种方式&quot;&gt;&lt;a href=&quot;#静态文件提供的两种方式&quot; class=&quot;headerlink&quot; title=&quot;静态文件提供的两种方式&quot;&gt;&lt;/a&gt;静态文件提供的两种方式&lt;/h2&gt;&lt;p&gt;Django 提供了 django.contrib.staticfiles 来帮助用户管理静态文件。&lt;/p&gt;
@@ -28,8 +82,12 @@
 &lt;li&gt;确保django.contrib.staticfiles 在 settting 文件的 INSTALLED_APPS中&lt;/li&gt;
 &lt;li&gt;在 setting 文件中，定义变量 STATIC_URL&lt;br&gt; STATIC_URL = ‘/static/‘&lt;/li&gt;
 &lt;li&gt;在 my_site/my_app/目录下新建文件夹static/my_app/ 然后在其下面存放文件 myexample.jpg文件&lt;/li&gt;
-&lt;li&gt;在模板中使用的时候，可以有两种使用方式&lt;ol&gt;
-&lt;li&gt;硬编码&lt;br&gt;直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2&lt;br&gt;目录结构如下：&lt;br&gt;my_app1&lt;br&gt;-static&lt;br&gt;—my_app&lt;br&gt;—–myexample.jpg&lt;br&gt;my_app2&lt;br&gt;-static&lt;br&gt;—my_app&lt;br&gt;—–myexample.jpg&lt;br&gt;那么这样使用的时候，会直接使用第一个目录下的文件&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在模板中使用的时候，可以有两种使用方式&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;硬编码&lt;br&gt;直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2&lt;br&gt;目录结构如下：&lt;br&gt;my_app1&lt;br&gt;-static&lt;br&gt;—my_app&lt;br&gt;—–myexample.jpg&lt;br&gt;my_app2&lt;br&gt;-static&lt;br&gt;—my_app&lt;br&gt;—–myexample.jpg&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么这样使用的时候，会直接使用第一个目录下的文件&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;软编码&lt;br&gt;也可以使用 static 模板标签来根据相对路径生成 url.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;

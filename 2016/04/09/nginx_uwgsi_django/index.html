@@ -4,33 +4,23 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>统计学笔记 | 32bits</title>
+  <title>Nginx+uWSGI+Django 配置 | 32bits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="标准差可以用来计算置信度。95%的置信度表示有95%的可能性，某个未知的参数会落在某个区间。
-
-标准差
-置信度&amp;amp;置信区间
-假设检验
-t-统计">
+  <meta name="description" content="前言&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
+&amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web">
 <meta property="og:type" content="article">
-<meta property="og:title" content="统计学笔记">
-<meta property="og:url" content="http://32t.github.io/2016/03/11/ISLR_chap3/index.html">
+<meta property="og:title" content="Nginx+uWSGI+Django 配置">
+<meta property="og:url" content="http://32t.github.io/2016/04/09/nginx_uwgsi_django/index.html">
 <meta property="og:site_name" content="32bits">
-<meta property="og:description" content="标准差可以用来计算置信度。95%的置信度表示有95%的可能性，某个未知的参数会落在某个区间。
-
-标准差
-置信度&amp;amp;置信区间
-假设检验
-t-统计">
-<meta property="og:updated_time" content="2016-03-19T16:09:30.000Z">
+<meta property="og:description" content="前言&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
+&amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web">
+<meta property="og:image" content="http://www.nowamagic.net/librarys/images/201309/2013_09_04_01.png">
+<meta property="og:updated_time" content="2016-04-09T09:31:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="统计学笔记">
-<meta name="twitter:description" content="标准差可以用来计算置信度。95%的置信度表示有95%的可能性，某个未知的参数会落在某个区间。
-
-标准差
-置信度&amp;amp;置信区间
-假设检验
-t-统计">
+<meta name="twitter:title" content="Nginx+uWSGI+Django 配置">
+<meta name="twitter:description" content="前言&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
+&amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web">
+<meta name="twitter:image" content="http://www.nowamagic.net/librarys/images/201309/2013_09_04_01.png">
   
     <link rel="alternative" href="/atom.xml" title="32bits" type="application/atom+xml">
   
@@ -220,11 +210,11 @@ t-统计">
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-ISLR_chap3" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-nginx_uwgsi_django" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/11/ISLR_chap3/" class="article-date">
-  	<time datetime="2016-03-11T06:51:12.000Z" itemprop="datePublished">2016-03-11</time>
+      <a href="/2016/04/09/nginx_uwgsi_django/" class="article-date">
+  	<time datetime="2016-04-09T09:50:32.000Z" itemprop="datePublished">2016-04-09</time>
 </a>
     </div>
   
@@ -237,7 +227,7 @@ t-统计">
         
   
     <h1 class="article-title" itemprop="name">
-      统计学笔记
+      Nginx+uWSGI+Django 配置
     </h1>
   
 
@@ -245,10 +235,6 @@ t-统计">
       
       <div class="article-info article-info-post">
         
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/R/">R</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/统计学/">统计学</a></li></ul>
-	</div>
-
         
 
         <div class="clearfix"></div>
@@ -257,13 +243,38 @@ t-统计">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>标准差可以用来计算置信度。<br>95%的置信度表示有95%的可能性，某个未知的参数会落在某个区间。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&#160; &#160; &#160; &#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。</p>
+<p>&#160; &#160; &#160; &#160;在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Django 处理，Django 处理返回结果由 uWSGI 发给 Nginx，并返回给用户。可见，uWSGI的作用就类似一个桥接器。起到桥梁的作用。</p>
+<blockquote>
+<p>不使用Nginx，只使用uWSGI+Django也是可以实现WEB服务的。uWSGI也可以直接处理WEB请求</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="uwsgi、uWSGI、WSGI的区别"><a href="#uwsgi、uWSGI、WSGI的区别" class="headerlink" title="uwsgi、uWSGI、WSGI的区别"></a>uwsgi、uWSGI、WSGI的区别</h1><h2 id="WSGI"><a href="#WSGI" class="headerlink" title="WSGI"></a>WSGI</h2><blockquote>
+<p>WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</p>
+</blockquote>
+<p>&#160; &#160; &#160; &#160;WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</p>
+<p>&#160; &#160; &#160; &#160;WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。</p>
+<p>&#160; &#160; &#160; &#160;<br>很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 Nginx 做 uwsgi 。</p>
+<blockquote>
+<p>也就是说，WSGI就像是一座桥梁，一边连着web服务器，另一边连着用户的应用。但是呢，这个桥的功能很弱，有时候还需要别的桥来帮忙才能进行处理。WSGI 的作用如图所示：</p>
+</blockquote>
+<p><img src="http://www.nowamagic.net/librarys/images/201309/2013_09_04_01.png" alt="WSGI 的作用"></p>
+<h3 id="WSGI的作用"><a href="#WSGI的作用" class="headerlink" title="WSGI的作用"></a>WSGI的作用</h3><p>&#160; &#160; &#160; &#160;<br>WSGI有两方：“服务器”或“网关”一方，以及“应用程序”或“应用框架”一方。服务方调用应用方，提供环境信息，以及一个回调函数（提供给应用程序用来将消息头传递给服务器方），并接收Web内容作为返回值。</p>
+<p>&#160; &#160; &#160; &#160;<br>所谓的 WSGI中间件同时实现了API的两方，因此可以在WSGI服务和WSGI应用之间起调解作用：从WSGI服务器的角度来说，中间件扮演应用程序，而从应用程序的角度来说，中间件扮演服务器。“中间件”组件可以执行以下功能：</p>
+<p>&#160; &#160; &#160; &#160;<br>重写环境变量后，根据目标URL，将请求消息路由到不同的应用对象。<br>允许在一个进程中同时运行多个应用程序或应用框架。<br>负载均衡和远程处理，通过在网络上转发请求和响应消息。<br>进行内容后处理，例如应用XSLT样式表。<br>WSGI 的设计确实参考了 Java 的 servlet。<a href="http://www.python.org/dev/peps/pep-0333/" target="_blank" rel="external">python 开发者文档中</a>有这么一段话：</p>
+<blockquote>
+<p>By contrast, although Java has just as many web application frameworks available, Java’s “servlet” API makes it possible for applications written with any Java web application framework to run in any web server that supports the servlet API.</p>
+</blockquote>
+<h3 id="uWSGI-和-uwsgi"><a href="#uWSGI-和-uwsgi" class="headerlink" title="uWSGI 和 uwsgi"></a>uWSGI 和 uwsgi</h3><p>&#160; &#160; &#160; &#160;uWSGI是一个Web服务器，它实现了WSGI协议、uwsgi、http等协议。Nginx中HttpUwsgiModule的作用是与uWSGI服务器进行交换。</p>
+<p>&#160; &#160; &#160; &#160;要注意 WSGI / uwsgi / uWSGI 这三个概念的区分。</p>
 <ul>
-<li>标准差</li>
-<li>置信度&amp;置信区间</li>
-<li>假设检验</li>
-<li>t-统计</li>
+<li>WSGI看过前面小节的同学很清楚了，是一种通信协议。</li>
+<li>uwsgi同WSGI一样是一种通信协议。</li>
+<li>而uWSGI是实现了uwsgi和WSGI两种协议的Web服务器。</li>
 </ul>
+<p>&#160; &#160; &#160; &#160;uwsgi协议是一个uWSGI服务器自有的协议，它用于定义传输信息的类型（type of information），每一个uwsgi packet前4byte为传输信息类型描述，它与WSGI相比是两样东西。</p>
+<p>&#160; &#160; &#160; &#160;关于uwsgi协议看这里：The uwsgi protocol。</p>
+<p>&#160; &#160; &#160; &#160;为什么有了uWSGI为什么还需要Nginx？因为Nginx具备优秀的静态内容处理能力，然后将动态内容转发给uWSGI服务器，这样可以达到很好的客户端响应。</p>
 
       
     </div>
@@ -273,18 +284,9 @@ t-统计">
     
 <nav id="article-nav">
   
-    <a href="/2016/03/11/Hello-world-again/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          密码学的新方向笔记
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/03/11/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2016/03/29/how-to-server-django-static-file/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何在 Django 中设置静态文件</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -319,7 +321,7 @@ t-统计">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ISLR_chap3" data-title="统计学笔记" data-url="http://32t.github.io/2016/03/11/ISLR_chap3/"></div>
+	<div class="ds-thread" data-thread-key="nginx_uwgsi_django" data-title="Nginx+uWSGI+Django 配置" data-url="http://32t.github.io/2016/04/09/nginx_uwgsi_django/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
