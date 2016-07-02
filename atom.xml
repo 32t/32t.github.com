@@ -108,7 +108,7 @@
     <link href="http://32t.github.io/2016/04/09/nginx_uwgsi_django/"/>
     <id>http://32t.github.io/2016/04/09/nginx_uwgsi_django/</id>
     <published>2016-04-09T09:50:32.000Z</published>
-    <updated>2016-04-09T11:18:44.000Z</updated>
+    <updated>2016-07-02T06:04:33.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。&lt;/p&gt;
 &lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160;在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Django 处理，Django 处理返回结果由 uWSGI 发给 Nginx，并返回给用户。可见，uWSGI的作用就类似一个桥接器。起到桥梁的作用。&lt;/p&gt;
@@ -211,6 +211,12 @@
     
     </summary>
     
+    
+      <category term="Django" scheme="http://32t.github.io/tags/Django/"/>
+    
+      <category term="Nginx" scheme="http://32t.github.io/tags/Nginx/"/>
+    
+      <category term="uWSGI" scheme="http://32t.github.io/tags/uWSGI/"/>
     
   </entry>
   
