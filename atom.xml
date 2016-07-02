@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://32t.github.io/"/>
-  <updated>2016-04-09T11:18:44.000Z</updated>
+  <updated>2016-07-02T06:01:47.000Z</updated>
   <id>http://32t.github.io/</id>
   
   <author>
@@ -14,6 +14,94 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PBKDF2介绍</title>
+    <link href="http://32t.github.io/2016/07/02/PBKDF2%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://32t.github.io/2016/07/02/PBKDF2介绍/</id>
+    <published>2016-07-02T05:52:42.000Z</published>
+    <updated>2016-07-02T06:01:47.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;PBKDF2是什么&quot;&gt;&lt;a href=&quot;#PBKDF2是什么&quot; class=&quot;headerlink&quot; title=&quot;PBKDF2是什么&quot;&gt;&lt;/a&gt;PBKDF2是什么&lt;/h1&gt;&lt;p&gt;PBKDF2(Password-Based Key Derivation Function)是一个用来导出密钥的函数，常用于生成加密的密码。&lt;/p&gt;
+&lt;p&gt;它的基本原理是通过一个伪随机函数（例如HMAC函数），把明文和一个盐值作为输入参数，然后重复进行运算，并最终产生密钥。&lt;/p&gt;
+&lt;p&gt;如果重复的次数足够大，破解的成本就会变得很高。而盐值的添加也会增加“彩虹表”攻击的难度。&lt;/p&gt;
+&lt;h1 id=&quot;破解PBKDF2生成的密码要多久&quot;&gt;&lt;a href=&quot;#破解PBKDF2生成的密码要多久&quot; class=&quot;headerlink&quot; title=&quot;破解PBKDF2生成的密码要多久&quot;&gt;&lt;/a&gt;破解PBKDF2生成的密码要多久&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://sfault-image.b0.upaiyun.com/200/341/2003417156-568cefd8632e8_articlex&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上图是14年在一台多GPU的高端PC上进行的测试，可以看到，在4个单词（随机从Diceware列表选择）的情况下，如果每秒能猜2万个密码，则要猜出密码平均需要2890年。如果密码的长度再高点，则这个时间是天文数字了。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;PBKDF2函数的定义&quot;&gt;&lt;a href=&quot;#PBKDF2函数的定义&quot; class=&quot;headerlink&quot; title=&quot;PBKDF2函数的定义&quot;&gt;&lt;/a&gt;PBKDF2函数的定义&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;DK = PBKDF2(PRF, Password, Salt, c, dkLen)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;PRF是一个伪随机函数，例如HASH_HMAC函数，它会输出长度为hLen的结果。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Password是用来生成密钥的原文密码。&lt;/li&gt;
+&lt;li&gt;Salt是一个加密用的盐值。&lt;/li&gt;
+&lt;li&gt;c是进行重复计算的次数。&lt;/li&gt;
+&lt;li&gt;dkLen是期望得到的密钥的长度。&lt;/li&gt;
+&lt;li&gt;DK是最后产生的密钥。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;PBKDF2的算法流程&quot;&gt;&lt;a href=&quot;#PBKDF2的算法流程&quot; class=&quot;headerlink&quot; title=&quot;PBKDF2的算法流程&quot;&gt;&lt;/a&gt;PBKDF2的算法流程&lt;/h1&gt;&lt;p&gt;DK的值由一个以上的block拼接而成。block的数量是dkLen/hLen的值。就是说如果PRF输出的结果比期望得到的密钥长度要短，则要通过拼接多个结果以满足密钥的长度：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;DK = T1 || T2 || ... || Tdklen/hlen&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;而每个block则通过则通过函数F得到：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Ti = F(Password, Salt, c, i)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在函数F里，PRF会进行c次的运算，然后把得到的结果进行异或运算，得到最终的值。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;F(Password, Salt, c, i) = U1 ^ U2 ^ ... ^ Uc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;第一次，PRF会使用Password作为key，Salt拼接上编码成大字节序的32位整型的i作为盐值进行运算。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;U1 = PRF(Password, Salt || INT_32_BE(i))&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;而后续的c-1次则会使用上次得到的结果作为盐值。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;U2 = PRF(Password, U1)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Uc = PRF(Password, Uc-1)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;函数F大致的流程图如下：&lt;br&gt;&lt;img src=&quot;https://sfault-image.b0.upaiyun.com/344/660/3446601878-568cf7d060dd8_articlex&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;PBKDF2算法在PHP中的使用&quot;&gt;&lt;a href=&quot;#PBKDF2算法在PHP中的使用&quot; class=&quot;headerlink&quot; title=&quot;PBKDF2算法在PHP中的使用&quot;&gt;&lt;/a&gt;PBKDF2算法在PHP中的使用&lt;/h1&gt;&lt;p&gt;从PHP5.5版本开始，PHP提供了原生的函数hash_pbkdf2实现PBKDF2算法：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;string hash_pbkdf2 ( string $algo , string $password , string $salt , int $iterations [, int $length = 0 [, bool $raw_output = false ]] )&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;具体用法请看：&lt;a href=&quot;http://php.net/manual/en/function.hash-pbkdf2.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/function.hash-pbkdf2.php&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;而在这个版本之前，我们可以使用其他用户写的兼容方法，例如：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;?php&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if (!function_exists(&amp;apos;hash_pbkdf2&amp;apos;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    function hash_pbkdf2($algo, $password, $salt, $count, $length = 0, $raw_output = false)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if (!in_array(strtolower($algo), hash_algos())) trigger_error(__FUNCTION__ . &amp;apos;(): Unknown hashing algorithm: &amp;apos; . $algo, E_USER_WARNING);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if (!is_numeric($count)) trigger_error(__FUNCTION__ . &amp;apos;(): expects parameter 4 to be long, &amp;apos; . gettype($count) . &amp;apos; given&amp;apos;, E_USER_WARNING);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if (!is_numeric($length)) trigger_error(__FUNCTION__ . &amp;apos;(): expects parameter 5 to be long, &amp;apos; . gettype($length) . &amp;apos; given&amp;apos;, E_USER_WARNING);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if ($count &amp;lt;= 0) trigger_error(__FUNCTION__ . &amp;apos;(): Iterations must be a positive integer: &amp;apos; . $count, E_USER_WARNING);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if ($length &amp;lt; 0) trigger_error(__FUNCTION__ . &amp;apos;(): Length must be greater than or equal to 0: &amp;apos; . $length, E_USER_WARNING);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        $output = &amp;apos;&amp;apos;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        $block_count = $length ? ceil($length / strlen(hash($algo, &amp;apos;&amp;apos;, $raw_output))) : 1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        for ($i = 1; $i &amp;lt;= $block_count; $i++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            $last = $xorsum = hash_hmac($algo, $salt . pack(&amp;apos;N&amp;apos;, $i), $password, true);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            for ($j = 1; $j &amp;lt; $count; $j++)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                $xorsum ^= ($last = hash_hmac($algo, $last, $password, true));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            $output .= $xorsum;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if (!$raw_output) $output = bin2hex($output);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return $length ? substr($output, 0, $length) : $output;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;又或者这个：&lt;a href=&quot;https://github.com/rchouinard/hash_pbkdf2-compat&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/rchouinard/hash_pbkdf2-compat&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基于安全考虑，需要注意以下几点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$algo建议选择SHA256或更安全的哈希算法。&lt;/li&gt;
+&lt;li&gt;$salt至少为8字节，且要为随机数。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;$count迭代次数建议至少为50000次，除非有严格的性能要求。&lt;br&gt;参考:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/PBKDF2&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://en.wikipedia.org/wiki/PBKDF2&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://php.net/manual/en/function.hash-pbkdf2.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/function.hash-pbkdf2.php&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.agilebits.com/2014/03/10/crackers-report-great-news-for-1password-4/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://blog.agilebits.com/2014/03/10/crackers-report-great-news-for-1password-4/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;PBKDF2是什么&quot;&gt;&lt;a href=&quot;#PBKDF2是什么&quot; class=&quot;headerlink&quot; title=&quot;PBKDF2是什么&quot;&gt;&lt;/a&gt;PBKDF2是什么&lt;/h1&gt;&lt;p&gt;PBKDF2(Password-Based Key Derivation Function)是一个用来导出密钥的函数，常用于生成加密的密码。&lt;/p&gt;
+&lt;p&gt;它的基本原理是通过一个伪随机函数（例如HMAC函数），把明文和一个盐值作为输入参数，然后重复进行运算，并最终产生密钥。&lt;/p&gt;
+&lt;p&gt;如果重复的次数足够大，破解的成本就会变得很高。而盐值的添加也会增加“彩虹表”攻击的难度。&lt;/p&gt;
+&lt;h1 id=&quot;破解PBKDF2生成的密码要多久&quot;&gt;&lt;a href=&quot;#破解PBKDF2生成的密码要多久&quot; class=&quot;headerlink&quot; title=&quot;破解PBKDF2生成的密码要多久&quot;&gt;&lt;/a&gt;破解PBKDF2生成的密码要多久&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://sfault-image.b0.upaiyun.com/200/341/2003417156-568cefd8632e8_articlex&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上图是14年在一台多GPU的高端PC上进行的测试，可以看到，在4个单词（随机从Diceware列表选择）的情况下，如果每秒能猜2万个密码，则要猜出密码平均需要2890年。如果密码的长度再高点，则这个时间是天文数字了。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="PBKDF" scheme="http://32t.github.io/tags/PBKDF/"/>
+    
+      <category term="PRF" scheme="http://32t.github.io/tags/PRF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx+uWSGI+Django 优化</title>
+    <link href="http://32t.github.io/2016/04/09/nginx_uwgsi_django_optmi/"/>
+    <id>http://32t.github.io/2016/04/09/nginx_uwgsi_django_optmi/</id>
+    <published>2016-04-09T12:50:32.000Z</published>
+    <updated>2016-04-09T12:46:30.000Z</updated>
+    
+    <content type="html">&lt;p&gt;#&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Nginx+uWSGI+Django 配置</title>

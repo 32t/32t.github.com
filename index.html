@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+						<a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
 					</div>
 				</section>
 				
@@ -205,6 +205,123 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-PBKDF2介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/02/PBKDF2介绍/" class="article-date">
+  	<time datetime="2016-07-02T05:52:42.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/02/PBKDF2介绍/">PBKDF2介绍</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PBKDF2是什么"><a href="#PBKDF2是什么" class="headerlink" title="PBKDF2是什么"></a>PBKDF2是什么</h1><p>PBKDF2(Password-Based Key Derivation Function)是一个用来导出密钥的函数，常用于生成加密的密码。</p>
+<p>它的基本原理是通过一个伪随机函数（例如HMAC函数），把明文和一个盐值作为输入参数，然后重复进行运算，并最终产生密钥。</p>
+<p>如果重复的次数足够大，破解的成本就会变得很高。而盐值的添加也会增加“彩虹表”攻击的难度。</p>
+<h1 id="破解PBKDF2生成的密码要多久"><a href="#破解PBKDF2生成的密码要多久" class="headerlink" title="破解PBKDF2生成的密码要多久"></a>破解PBKDF2生成的密码要多久</h1><p><img src="https://sfault-image.b0.upaiyun.com/200/341/2003417156-568cefd8632e8_articlex" alt="image"></p>
+<p>上图是14年在一台多GPU的高端PC上进行的测试，可以看到，在4个单词（随机从Diceware列表选择）的情况下，如果每秒能猜2万个密码，则要猜出密码平均需要2890年。如果密码的长度再高点，则这个时间是天文数字了。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PBKDF/">PBKDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PRF/">PRF</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/02/PBKDF2介绍/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-nginx_uwgsi_django_optmi" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/09/nginx_uwgsi_django_optmi/" class="article-date">
+  	<time datetime="2016-04-09T12:50:32.000Z" itemprop="datePublished">2016-04-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/09/nginx_uwgsi_django_optmi/">Nginx+uWSGI+Django 优化</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-nginx_uwgsi_django" class="article article-type-post" itemscope itemprop="blogPost">
   
