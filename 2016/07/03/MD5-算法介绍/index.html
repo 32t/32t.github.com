@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="32bits">
 <meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;MD5即Message-Digest Algorithm 5（信息-摘要算法5），用于确保信息传输完整一致。是计算机广泛使用的杂凑算法之一（又译摘要算法、哈希算法），主流编程语言普遍已有MD5实现。将数据（如汉字）运算为另一固定长度值，是杂凑算法的基础原理，MD5的前身有MD2、MD3和MD4。
 &amp;#160; &amp;#160; &amp;#160; &amp;#1">
-<meta property="og:updated_time" content="2016-07-03T05:59:47.000Z">
+<meta property="og:updated_time" content="2016-07-03T06:00:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MD5 算法介绍">
 <meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;MD5即Message-Digest Algorithm 5（信息-摘要算法5），用于确保信息传输完整一致。是计算机广泛使用的杂凑算法之一（又译摘要算法、哈希算法），主流编程语言普遍已有MD5实现。将数据（如汉字）运算为另一固定长度值，是杂凑算法的基础原理，MD5的前身有MD2、MD3和MD4。
@@ -283,7 +283,7 @@
 </ol>
 <h1 id="MD5算法原理"><a href="#MD5算法原理" class="headerlink" title="MD5算法原理"></a>MD5算法原理</h1><p>对MD5算法简要的叙述可以为：MD5以512位分组来处理输入的信息，且每一分组又被划分为16个32位子分组，经过了一系列的处理后，算法的输出由四个32位分组组成，将这四个32位分组级联后将生成一个128位散列值。</p>
 <h2 id="第一步、填充："><a href="#第一步、填充：" class="headerlink" title="第一步、填充："></a>第一步、填充：</h2><p>如果输入信息的长度(bit)对512求余的结果不等于448，就需要填充使得对512求余的结果等于448。填充的方法是填充一个1和n个0。填充完后，信息的长度就为N*512+448(bit)；</p>
-<h2 id="第二步、记录信息长度："><a href="#第二步、记录信息长度：" class="headerlink" title="第二步、记录信息长度："></a>第二步、记录信息长度：</h2><p>用64位来存储填充前信息长度。这64位加在第一步结果的后面，这样信息长度就变为<br><code>N*512+448+64=(N+1)*512</code>位。</p>
+<h2 id="第二步、记录信息长度："><a href="#第二步、记录信息长度：" class="headerlink" title="第二步、记录信息长度："></a>第二步、记录信息长度：</h2><p>用64位来存储填充前信息长度。这64位加在第一步结果的后面，这样信息长度就变为<code>N*512+448+64=(N+1)*512</code>位。</p>
 <p>第三步、装入标准的幻数（四个整数）：标准的幻数（物理顺序）是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A=(01234567)16，B=(89ABCDEF)16，C=(FEDCBA98)16，D=(76543210)16</span><br></pre></td></tr></table></figure></p>
 <p>如果在程序中定义应该是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A=0X67452301L，B=0XEFCDAB89L，C=0X98BADCFEL，D=0X10325476L</span><br></pre></td></tr></table></figure></p>
 <p>因为是小端的原因。</p>
