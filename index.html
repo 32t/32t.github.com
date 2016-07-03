@@ -241,48 +241,6 @@
 <li>强抗碰撞：已知原数据和其MD5值，想找到一个具有相同MD5值的数据（即伪造数据）是非常困难的。</li>
 </ol>
 <p>&#160; &#160; &#160; &#160;MD5的作用是让大容量信息在用数字签名软件签署私人密钥前被”压缩”成一种保密的格式（就是把一个任意长度的字节串变换成一定长的十六进制数字串）。除了MD5以外，其中比较有名的还有sha-1、RIPEMD以及Haval等。</p>
-<h1 id="MD5算法历史"><a href="#MD5算法历史" class="headerlink" title="MD5算法历史"></a>MD5算法历史</h1><ol>
-<li><p>MD2</p>
-<p>Rivest在1989年开发出MD2算法。在这个算法中，首先对信息进行数据补位，使信息的字节长度是16的倍数。然后，以一个16位的检验和追加到信息末尾，并且根据这个新产生的信息计算出散列值。后来，Rogier和Chauvaud发现如果忽略了检验将和MD2产生冲突。MD2算法加密后结果是唯一的（即不同信息加密后的结果不同）。</p>
-</li>
-<li><p>MD4</p>
-<p>为了加强算法的安全性，Rivest在1990年又开发出MD4算法。MD4算法同样需要填补信息以确保信息的比特位长度减去448后能被512整除（信息比特位长度mod 512 = 448）。然后，一个以64位二进制表示的信息的最初长度被添加进来。信息被处理成512位damg?rd/merkle迭代结构的区块，而且每个区块要通过三个不同步骤的处理。Den boer和Bosselaers以及其他人很快的发现了攻击MD4版本中第一步和第三步的漏洞。Dobbertin向大家演示了如何利用一部普通的个人电脑在几分钟内找到MD4完整版本中的冲突（这个冲突实际上是一种漏洞，它将导致对不同的内容进行加密却可能得到相同的加密后结果）。毫无疑问，MD4就此被淘汰掉了。</p>
-<p>尽管MD4算法在安全上有个这么大的漏洞，但它对在其后才被开发出来的好几种信息安全加密算法的出现却有着不可忽视的引导作用。</p>
-</li>
-<li><p>MD5</p>
-<p>1991年，Rivest开发出技术上更为趋近成熟的md5算法。它在MD4的基础上增加了”安全-带子”（safety-belts）的概念。虽然MD5比MD4复杂度大一些，但却更为安全。这个算法很明显的由四个和MD4设计有少许不同的步骤组成。在MD5算法中，信息-摘要的大小和填充的必要条件与MD4完全相同。Den boer和Bosselaers曾发现MD5算法中的假冲突（pseudo-collisions），但除此之外就没有其他被发现的加密后结果了。</p>
-</li>
-</ol>
-<h1 id="MD5算法功能"><a href="#MD5算法功能" class="headerlink" title="MD5算法功能"></a>MD5算法功能</h1><ol>
-<li><p>防止被篡改：</p>
-<ol>
-<li>比如发送一个电子文档，发送前，我先得到MD5的输出结果a。然后在对方收到电子文档后，对方也得到一个MD5的输出结果b。如果a与b一样就代表中途未被篡改。</li>
-<li>比如我提供文件下载，为了防止不法分子在安装程序中添加木马，我可以在网站上公布由安装文件得到的MD5输出结果。</li>
-<li>SVN在检测文件是否在CheckOut后被修改过，也是用到了MD5.</li>
-</ol>
-</li>
-<li><p>防止直接看到明文：<br>现在很多网站在数据库存储用户的密码的时候都是存储用户密码的MD5值。这样就算不法分子得到数据库的用户密码的MD5值，也无法知道用户的密码(其实这样是不安全的，后面我会提到)。（比如在UNIX系统中用户的密码就是以MD5（或其它类似的算法）经加密后存储在文件系统中。当用户登录的时候，系统把用户输入的密码计算成MD5值，然后再去和保存在文件系统中的MD5值进行比较，进而确定输入的密码是否正确。通过这样的步骤，系统在并不知道用户密码的明码的情况下就可以确定用户登录系统的合法性。这不但可以避免用户的密码被具有系统管理员权限的用户知道，而且还在一定程度上增加了密码被破解的难度。）</p>
-</li>
-<li><p>防止抵赖（数字签名）：</p>
-<p>这需要一个第三方认证机构。例如A写了一个文件，认证机构对此文件用MD5算法产生摘要信息并做好记录。若以后A说这文件不是他写的，权威机构只需对此文件重新产生摘要信息，然后跟记录在册的摘要信息进行比对，相同的话，就证明是A写的了。这就是所谓的“数字签名”。</p>
-</li>
-</ol>
-<h1 id="MD5算法原理"><a href="#MD5算法原理" class="headerlink" title="MD5算法原理"></a>MD5算法原理</h1><p>对MD5算法简要的叙述可以为：MD5以512位分组来处理输入的信息，且每一分组又被划分为16个32位子分组，经过了一系列的处理后，算法的输出由四个32位分组组成，将这四个32位分组级联后将生成一个128位散列值。</p>
-<h2 id="第一步、填充："><a href="#第一步、填充：" class="headerlink" title="第一步、填充："></a>第一步、填充：</h2><p>如果输入信息的长度(bit)对512求余的结果不等于448，就需要填充使得对512求余的结果等于448。填充的方法是填充一个1和n个0。填充完后，信息的长度就为N*512+448(bit)；</p>
-<h2 id="第二步、记录信息长度："><a href="#第二步、记录信息长度：" class="headerlink" title="第二步、记录信息长度："></a>第二步、记录信息长度：</h2><p>用64位来存储填充前信息长度。这64位加在第一步结果的后面，这样信息长度就变为<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">第三步、装入标准的幻数（四个整数）：标准的幻数（物理顺序）是</span><br></pre></td></tr></table></figure></p>
-<p>A=(01234567)16，B=(89ABCDEF)16，C=(FEDCBA98)16，D=(76543210)16<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如果在程序中定义应该是</span><br></pre></td></tr></table></figure></p>
-<p>A=0X67452301L，B=0XEFCDAB89L，C=0X98BADCFEL，D=0X10325476L<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">因为是小端的原因。</span><br><span class="line">## 第四步、分组个数（N+1）次四轮循环运算</span><br><span class="line"></span><br><span class="line">1. 将每一512字节细分成16个小组，每个小组64位（8个字节）</span><br><span class="line">2. 定义四个线性函数(&amp;是与,|是或,~是非,^是异或)</span><br></pre></td></tr></table></figure></p>
-<p>  F(X,Y,Z)=(X&amp;Y)|((~X)&amp;Z)<br>  G(X,Y,Z)=(X&amp;Z)|(Y&amp;(~Z))<br>  H(X,Y,Z)=X^Y^Z<br>  I(X,Y,Z)=Y^(X|(~Z))<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 设Mj表示消息的第j个子分组（从0到15），&lt;&lt;&lt;s表示循环左移s位，则四种操作为：</span><br></pre></td></tr></table></figure></p>
-<p>  FF(a,b,c,d,M[j],s,t[i])表示a=b+((a+F(b,c,d)+M[j]+t[i])&lt;&lt;<s) gg(a,b,c,d,m[j],s,t[i])表示a="b+((a+G(b,c,d)+M[j]+t[i])<<<s)" hh(a,b,c,d,m[j],s,t[i])表示a="b+((a+H(b,c,d)+M[j]+t[i])<<<s)" ii(a,b,c,d,m[j],s,t[i])表示a="b+((a+I(b,c,d)+M[j]+t[i])<<<s)" <figure="" class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  T[i]等于4294967296*abs(sin(i))所得结果的整数部分，其中k用弧度来表示。(这样做是为了通过正弦函数和幂函数来进一步消除变换中的线性) 4294967296=2^32</span><br><span class="line"></span><br><span class="line">4. 四轮运算</span><br><span class="line">第一轮</span><br></pre></td></tr></table></s)></p>
-<p>a=FF(a,b,c,d,M0,7,0xd76aa478)<br>b=FF(d,a,b,c,M1,12,0xe8c7b756)<br>c=FF(c,d,a,b,M2,17,0x242070db)<br>d=FF(b,c,d,a,M3,22,0xc1bdceee)<br>a=FF(a,b,c,d,M4,7,0xf57c0faf)<br>b=FF(d,a,b,c,M5,12,0x4787c62a)<br>c=FF(c,d,a,b,M6,17,0xa8304613)<br>d=FF(b,c,d,a,M7,22,0xfd469501)<br>a=FF(a,b,c,d,M8,7,0x698098d8)<br>b=FF(d,a,b,c,M9,12,0x8b44f7af)<br>c=FF(c,d,a,b,M10,17,0xffff5bb1)<br>d=FF(b,c,d,a,M11,22,0x895cd7be)<br>a=FF(a,b,c,d,M12,7,0x6b901122)<br>b=FF(d,a,b,c,M13,12,0xfd987193)<br>c=FF(c,d,a,b,M14,17,0xa679438e)<br>d=FF(b,c,d,a,M15,22,0x49b40821)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第二轮</span><br></pre></td></tr></table></figure></p>
-<p>a=GG(a,b,c,d,M1,5,0xf61e2562)<br>b=GG(d,a,b,c,M6,9,0xc040b340)<br>c=GG(c,d,a,b,M11,14,0x265e5a51)<br>d=GG(b,c,d,a,M0,20,0xe9b6c7aa)<br>a=GG(a,b,c,d,M5,5,0xd62f105d)<br>b=GG(d,a,b,c,M10,9,0x02441453)<br>c=GG(c,d,a,b,M15,14,0xd8a1e681)<br>d=GG(b,c,d,a,M4,20,0xe7d3fbc8)<br>a=GG(a,b,c,d,M9,5,0x21e1cde6)<br>b=GG(d,a,b,c,M14,9,0xc33707d6)<br>c=GG(c,d,a,b,M3,14,0xf4d50d87)<br>d=GG(b,c,d,a,M8,20,0x455a14ed)<br>a=GG(a,b,c,d,M13,5,0xa9e3e905)<br>b=GG(d,a,b,c,M2,9,0xfcefa3f8)<br>c=GG(c,d,a,b,M7,14,0x676f02d9)<br>d=GG(b,c,d,a,M12,20,0x8d2a4c8a)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第三轮</span><br></pre></td></tr></table></figure></p>
-<p>a=HH(a,b,c,d,M5,4,0xfffa3942)<br>b=HH(d,a,b,c,M8,11,0x8771f681)<br>c=HH(c,d,a,b,M11,16,0x6d9d6122)<br>d=HH(b,c,d,a,M14,23,0xfde5380c)<br>a=HH(a,b,c,d,M1,4,0xa4beea44)<br>b=HH(d,a,b,c,M4,11,0x4bdecfa9)<br>c=HH(c,d,a,b,M7,16,0xf6bb4b60)<br>d=HH(b,c,d,a,M10,23,0xbebfbc70)<br>a=HH(a,b,c,d,M13,4,0x289b7ec6)<br>b=HH(d,a,b,c,M0,11,0xeaa127fa)<br>c=HH(c,d,a,b,M3,16,0xd4ef3085)<br>d=HH(b,c,d,a,M6,23,0x04881d05)<br>a=HH(a,b,c,d,M9,4,0xd9d4d039)<br>b=HH(d,a,b,c,M12,11,0xe6db99e5)<br>c=HH(c,d,a,b,M15,16,0x1fa27cf8)<br>d=HH(b,c,d,a,M2,23,0xc4ac5665)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第四轮</span><br></pre></td></tr></table></figure></p>
-<p>a=II(a,b,c,d,M0,6,0xf4292244)<br>b=II(d,a,b,c,M7,10,0x432aff97)<br>c=II(c,d,a,b,M14,15,0xab9423a7)<br>d=II(b,c,d,a,M5,21,0xfc93a039)<br>a=II(a,b,c,d,M12,6,0x655b59c3)<br>b=II(d,a,b,c,M3,10,0x8f0ccc92)<br>c=II(c,d,a,b,M10,15,0xffeff47d)<br>d=II(b,c,d,a,M1,21,0x85845dd1)<br>a=II(a,b,c,d,M8,6,0x6fa87e4f)<br>b=II(d,a,b,c,M15,10,0xfe2ce6e0)<br>c=II(c,d,a,b,M6,15,0xa3014314)<br>d=II(b,c,d,a,M13,21,0x4e0811a1)<br>a=II(a,b,c,d,M4,6,0xf7537e82)<br>b=II(d,a,b,c,M11,10,0xbd3af235)<br>c=II(c,d,a,b,M2,15,0x2ad7d2bb)<br>d=II(b,c,d,a,M9,21,0xeb86d391)<br>```<br>每一轮的每一个操作都可以用上面的图片表示，在第一轮的第一个操作中，F 代表了 F 函数，第一个操作结束后，A 变成了第一轮中的 D，B 为第一轮的计算结果，C为第一轮中的 B，D 为第一轮中的 C，在第二轮中 A 即为 D， 另外三个也符合算法的规则。</p>
-<ol>
-<li>每轮循环后，将A，B，C，D分别加上a，b，c，d，然后进入下一循环。</li>
-<li>最终输出长度为128bit 的ABCD，即为散列值。</li>
-</ol>
-
       
     </div>
     
@@ -295,6 +253,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/03/MD5-算法介绍/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
