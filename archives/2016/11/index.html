@@ -4,21 +4,17 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>nginx+uwsgi+django 配置 | 32bits</title>
+  <title>Archives: 2016/11 | 32bits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
-在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Dja">
-<meta property="og:type" content="article">
-<meta property="og:title" content="nginx+uwsgi+django 配置">
-<meta property="og:url" content="http://32t.github.io/2016/03/11/nginx_uwgsi_django/index.html">
+  <meta name="description" content="Smart is new sex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="32bits">
+<meta property="og:url" content="http://32t.github.io/archives/2016/11/index.html">
 <meta property="og:site_name" content="32bits">
-<meta property="og:description" content="前言我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
-在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Dja">
-<meta property="og:updated_time" content="2016-04-09T08:47:23.000Z">
+<meta property="og:description" content="Smart is new sex">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx+uwsgi+django 配置">
-<meta name="twitter:description" content="前言我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。
-在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Dja">
+<meta name="twitter:title" content="32bits">
+<meta name="twitter:description" content="Smart is new sex">
   
     <link rel="alternative" href="/atom.xml" title="32bits" type="application/atom+xml">
   
@@ -122,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
 					</div>
 				</section>
 				
@@ -208,116 +204,53 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-nginx_uwgsi_django" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2016/03/11/nginx_uwgsi_django/" class="article-date">
-  	<time datetime="2016-03-11T11:50:32.000Z" itemprop="datePublished">2016-03-11</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2016/11/01/JAVA-反序列化漏洞利用分析/" class="archive-article-date">
+  	<time datetime="2016-11-01T10:25:21.000Z" itemprop="datePublished">11月 1</time>
 </a>
-    </div>
+        </div>
+    	 
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      nginx+uwsgi+django 配置
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/11/01/JAVA-反序列化漏洞利用分析/">Python import 问题</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-        
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在使用 Django 开发的时，测试过程中通常使用 Django 自带的 web 服务器，并设置 Debug=False，这样可以实时修改代码并更新程序。但是在生产环境中通常使用 Nginx+uWSGI+Django 这样的模式。</p>
-<p>在这种模式中，使用 Nginx 作为最前端 web 服务器，它接收所有请求并统一管理所有请求。然后 Nginx 将所有的非静态请求通过 uWSGI发送给 Django 处理，Django 处理返回结果由 uWSGI 发给 Nginx，并返回给用户。</p>
-<p>flow<br>st=&gt;start: 项目Export<br>e=&gt;end: 结束<br>op1=&gt;operation: 选择java下的javadoc<br>op2=&gt;operation: 选择要导出的工程<br>op3=&gt;operation: java doc的配置设置<br>st-&gt;op1-&gt;op2-&gt;op3-&gt;e</p>
-
-      
-    </div>
-    
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/03/11/markdown-start/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Markdown学习记录
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/03/11/ISLR_chap3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">统计学笔记</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-<div class="share_jia">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
-		<a class="jiathis_button_facebook"></a> 
-    <a class="jiathis_button_twitter"></a>
-    <a class="jiathis_button_plus"></a> 
-    <a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反序列化/">反序列化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li></ul>
 	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
 
+          
 
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
 
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="nginx_uwgsi_django" data-title="nginx+uwsgi+django 配置" data-url="http://32t.github.io/2016/03/11/nginx_uwgsi_django/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
+    
 
 </div>
       <footer id="footer">
@@ -347,8 +280,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false

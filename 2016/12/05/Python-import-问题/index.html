@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Python import 问题 | 32bits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##Python import 遇到的几个问题
+python 作为一个脚本语言，具有很多优良的特性，笔者最喜欢的大概是他丰富的函数库，同时在工作中自己也会开发一些库来使用，这样就会经常用到 import 功能。譬如我们有如下两个文件：12#bar.pybar_var=1
+123#foo.pyfrom bar import bar_varfoo_var=1
+在 foo.py 中我们引入了 bar 中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python import 问题">
+<meta property="og:url" content="http://32t.github.io/2016/12/05/Python-import-问题/index.html">
+<meta property="og:site_name" content="32bits">
+<meta property="og:description" content="##Python import 遇到的几个问题
+python 作为一个脚本语言，具有很多优良的特性，笔者最喜欢的大概是他丰富的函数库，同时在工作中自己也会开发一些库来使用，这样就会经常用到 import 功能。譬如我们有如下两个文件：12#bar.pybar_var=1
+123#foo.pyfrom bar import bar_varfoo_var=1
+在 foo.py 中我们引入了 bar 中">
+<meta property="og:updated_time" content="2016-12-05T05:33:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python import 问题">
+<meta name="twitter:description" content="##Python import 遇到的几个问题
+python 作为一个脚本语言，具有很多优良的特性，笔者最喜欢的大概是他丰富的函数库，同时在工作中自己也会开发一些库来使用，这样就会经常用到 import 功能。譬如我们有如下两个文件：12#bar.pybar_var=1
+123#foo.pyfrom bar import bar_varfoo_var=1
+在 foo.py 中我们引入了 bar 中">
+  
+    <link rel="alternative" href="/atom.xml" title="32bits" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/Geek.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://ww2.sinaimg.cn/large/63e8a615jw1f22m6ygcynj20go0gowf1.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Simon</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Smart is new sex</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/zhaopku09" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Simon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://ww2.sinaimg.cn/large/63e8a615jw1f22m6ygcynj20go0gowf1.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Simon</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Smart is new sex</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/zhaopku09" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Python-import-问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/05/Python-import-问题/" class="article-date">
+  	<time datetime="2016-12-05T04:53:55.000Z" itemprop="datePublished">2016-12-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python import 问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/import/">import</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##Python import 遇到的几个问题</p>
+<p>python 作为一个脚本语言，具有很多优良的特性，笔者最喜欢的大概是他丰富的函数库，同时在工作中自己也会开发一些库来使用，这样就会经常用到 import 功能。譬如我们有如下两个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#bar.py</span><br><span class="line">bar_var=1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#foo.py</span><br><span class="line">from bar import bar_var</span><br><span class="line">foo_var=1</span><br></pre></td></tr></table></figure>
+<p>在 foo.py 中我们引入了 bar 中的 bar_var 的变量。下面我们介绍 python 引用的机制及常见的问题。<br><a id="more"></a></p>
+<h3 id="Python-import-机制"><a href="#Python-import-机制" class="headerlink" title="Python import 机制"></a>Python import 机制</h3><p>python 在执行import 的时候实际上是将引入的文件执行了一遍，并将对应文件加入了 module 列表中，我们对 foo.py 文件做如下修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#foo.py</span><br><span class="line">import sys</span><br><span class="line">print &quot;BEFORE&quot;,sys.modules.get(&apos;bar&apos;)</span><br><span class="line">from bar import bar_var</span><br><span class="line">print &quot;AFTER&quot;,sys.modules.get(&apos;bar&apos;)</span><br><span class="line">foo_var = 1</span><br></pre></td></tr></table></figure>
+<p>运行后出现如下结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  Python python foo.py</span><br><span class="line">BEFORE None</span><br><span class="line">AFTER &lt;module &apos;bar&apos; from &apos;/Users/simon/Development/Python/bar.pyc&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，在引入 bar模块之前在模块列表中是没有这个模块的，引用之后就在模块列表中增加了对应的模块名称。</p>
+<p>Python 为了解决循环引用的问题，只要在程序中引用过，之后不会再次引用。我们对 foo.py 文件和 bar.py 文件修改如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#bar.py</span><br><span class="line">print &quot;impoted&quot;</span><br><span class="line">bar_var=1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#foo.py</span><br><span class="line">from bar import bar_var</span><br><span class="line">foo_var = 1</span><br><span class="line">from bar import bar_var</span><br></pre></td></tr></table></figure>
+<p>执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  Python python foo.py</span><br><span class="line">impoted</span><br></pre></td></tr></table></figure></p>
+<h3 id="Python-import-问题"><a href="#Python-import-问题" class="headerlink" title="Python import 问题"></a>Python import 问题</h3><p>如果我们将两个文件互相引用会出现什么问题呢？例如 bar.py 和 foo.py 文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#bar.py</span><br><span class="line">from foo import foo_var</span><br><span class="line">bar_var=1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#foo.py</span><br><span class="line">from bar import bar_var</span><br><span class="line">foo_var = 1</span><br></pre></td></tr></table></figure>
+<p>如果运行 foo.py 文件会报错如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  Python python foo.py</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;foo.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    from bar import bar_var</span><br><span class="line">  File &quot;/Users/simon/Development/Python/bar.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    from foo import foo_var</span><br><span class="line">  File &quot;/Users/simon/Development/Python/foo.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    from bar import bar_var</span><br><span class="line">ImportError: cannot import name bar_var</span><br></pre></td></tr></table></figure></p>
+<p>通过异常链我们可以看到在执行 python foo.py 文件的时候程序的运行过程，包括以下几步：</p>
+<ol>
+<li>foo.py 文件执行到第2行发现需要引用 bar 模块，</li>
+<li>查找 sys.modules 字典发现没有引入对应的模块，则引入 bar.py 文件，并添加到 sys.modules</li>
+<li>bar.py 文件被引入后执行到第2行发现需要引用 foo 模块</li>
+<li>查找 sys.modules 字典发现没有引入对应的模块，则引入 foo.py 文件</li>
+<li>foo.py 文件被引入后执行到第2行发现需要引用 bar 模块</li>
+<li>查找 sys.modules 字典发现已经引入了 bar 模块，则直接将bar 模块中的 bar_var 赋值给当前正在引入的 foo.py 文件</li>
+<li>已经引入的 bar 模块还没有执行到第三行，因此没有 bar_var 这个变量的值，赋值失败，报错</li>
+</ol>
+<p>如果将文件内容修改为如下代码，则不会出错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#bar.py</span><br><span class="line">bar_var=1</span><br><span class="line">from foo import foo_var</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#foo.py</span><br><span class="line">from bar import bar_var</span><br><span class="line">foo_var = 1</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  Python python foo.py</span><br><span class="line">➜  Python</span><br></pre></td></tr></table></figure></p>
+<p>运行流程如下：</p>
+<ol>
+<li>foo.py 文件执行到第2行发现需要引用 bar 模块，</li>
+<li>查找 sys.modules 字典发现没有引入对应的模块，则引入 bar.py 文件，并添加到 sys.modules</li>
+<li>bar.py 文件被引入后执行到第3行发现需要引用 foo 模块</li>
+<li>查找 sys.modules 字典发现没有引入对应的模块，则引入 foo.py 文件</li>
+<li>foo.py 文件被引入后执行到第2行发现需要引用 bar 模块</li>
+<li>查找 sys.modules 字典发现已经引入了 bar 模块，则直接将bar 模块中的 bar_var 赋值给当前正在引入的 foo.py 文件</li>
+<li>bar 模块中已经执行到了第3行，已经对 bar_var 变量进行了赋值，foo 模块成功引入了 bar_var</li>
+<li>foo模块执行到第3行对 foo_var 进行赋值，返回 bar模块</li>
+<li>返回 foo.py 文件</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/01/JAVA-反序列化漏洞利用分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python import 问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Python-import-问题" data-title="Python import 问题" data-url="http://32t.github.io/2016/12/05/Python-import-问题/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Simon
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Powered by Hexo</a>  
+          Theme 
+          <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> 
+          Modified By
+          <a href="http://32t.github.io" target="_blank">Simon</a> 
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
