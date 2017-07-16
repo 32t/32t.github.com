@@ -16,7 +16,7 @@
 <meta property="og:description" content="最近在做的工作需要给 GMSSL 密码库添加自有的加密算法和 ssl 算法。因此对 GMSSL 做了一些研究，GMSSL 是 OpenSSL 的 一个分支，它增加了包括 SM2、SM3、SM4在内的国密算法，以及国密的 SSL 加密信道，加密套件为 ECDSA-SM2-SM3-SM4。
 增加算法头文件算法头文件中包括了我们需要添加的加密算法和 ssl 算法。
 具体需要在include/openss">
-<meta property="og:updated_time" content="2017-07-16T15:52:51.000Z">
+<meta property="og:updated_time" content="2017-07-16T16:08:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GmSSL 添加新算法">
 <meta name="twitter:description" content="最近在做的工作需要给 GMSSL 密码库添加自有的加密算法和 ssl 算法。因此对 GMSSL 做了一些研究，GMSSL 是 OpenSSL 的 一个分支，它增加了包括 SM2、SM3、SM4在内的国密算法，以及国密的 SSL 加密信道，加密套件为 ECDSA-SM2-SM3-SM4。
@@ -125,7 +125,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/GmSSL/" style="font-size: 10px;">GmSSL</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/GmSSl/" style="font-size: 10px;">GmSSl</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 20px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
 					</div>
 				</section>
 				
@@ -237,7 +237,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GmSSL/">GmSSL</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GmSSl/">GmSSl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密码学/">密码学</a></li></ul>
 	</div>
 
         
@@ -252,6 +252,7 @@
 <h2 id="增加算法头文件"><a href="#增加算法头文件" class="headerlink" title="增加算法头文件"></a>增加算法头文件</h2><p>算法头文件中包括了我们需要添加的加密算法和 ssl 算法。</p>
 <p>具体需要在include/openssl 目录下新建文件 new_header.h</p>
 <p>在 new_header.h 中定义新的加密算法和 ssl 算法。内容大致如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int new_crypto();</span><br><span class="line">int new_ssl();</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h2 id="增加密码算法"><a href="#增加密码算法" class="headerlink" title="增加密码算法"></a>增加密码算法</h2><p>在 crypto 目录下新建算法目录 new_crypto<br>在 new_crypto 目录下新建文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crypto/new_crypto</span><br><span class="line">+-- build.info</span><br><span class="line">+-- crypto_src.c</span><br></pre></td></tr></table></figure>
 <p>build.info 是编译所需的文件，文件内容一般如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LIBS=../../libcrypto</span><br><span class="line">SOURCE[../../libcrypto]=\</span><br><span class="line">        crypto_src.c</span><br></pre></td></tr></table></figure></p>
