@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://32t.github.io/"/>
-  <updated>2016-12-05T05:33:15.000Z</updated>
+  <updated>2017-07-16T15:52:51.000Z</updated>
   <id>http://32t.github.io/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GmSSL 添加新算法</title>
+    <link href="http://32t.github.io/2017/07/16/GmSSL-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%AE%97%E6%B3%95/"/>
+    <id>http://32t.github.io/2017/07/16/GmSSL-添加新算法/</id>
+    <published>2017-07-16T15:07:01.000Z</published>
+    <updated>2017-07-16T15:52:51.000Z</updated>
+    
+    <content type="html">&lt;p&gt;最近在做的工作需要给 GMSSL 密码库添加自有的加密算法和 ssl 算法。因此对 GMSSL 做了一些研究，GMSSL 是 OpenSSL 的 一个分支，它增加了包括 SM2、SM3、SM4在内的国密算法，以及国密的 SSL 加密信道，加密套件为 ECDSA-SM2-SM3-SM4。&lt;/p&gt;
+&lt;h2 id=&quot;增加算法头文件&quot;&gt;&lt;a href=&quot;#增加算法头文件&quot; class=&quot;headerlink&quot; title=&quot;增加算法头文件&quot;&gt;&lt;/a&gt;增加算法头文件&lt;/h2&gt;&lt;p&gt;算法头文件中包括了我们需要添加的加密算法和 ssl 算法。&lt;/p&gt;
+&lt;p&gt;具体需要在include/openssl 目录下新建文件 new_header.h&lt;/p&gt;
+&lt;p&gt;在 new_header.h 中定义新的加密算法和 ssl 算法。内容大致如下：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;int new_crypto();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int new_ssl();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;增加密码算法&quot;&gt;&lt;a href=&quot;#增加密码算法&quot; class=&quot;headerlink&quot; title=&quot;增加密码算法&quot;&gt;&lt;/a&gt;增加密码算法&lt;/h2&gt;&lt;p&gt;在 crypto 目录下新建算法目录 new_crypto&lt;br&gt;在 new_crypto 目录下新建文件&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;crypto/new_crypto&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;+-- build.info&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;+-- crypto_src.c&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;build.info 是编译所需的文件，文件内容一般如下所示：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;LIBS=../../libcrypto&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SOURCE[../../libcrypto]=\&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        crypto_src.c&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;crypto_src.c 为算法的具体代码实现，内容大致如下：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#include&amp;lt;openssl/new_header.h&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int new_crypto()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;增加-ssl-算法文件&quot;&gt;&lt;a href=&quot;#增加-ssl-算法文件&quot; class=&quot;headerlink&quot; title=&quot;增加 ssl 算法文件&quot;&gt;&lt;/a&gt;增加 ssl 算法文件&lt;/h2&gt;&lt;p&gt;在 ssl目录下新建ssl算法代码文件ssl_new.c，内容大致如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#include&amp;lt;openssl/new_header.h&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int new_ssl()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;##修改符号文件&lt;br&gt;修改 util/mkdef.pl，在对应代码后添加新增头文件new_header：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;my $ssl=&amp;quot;include/openssl/ssl.h&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ssl.=&amp;quot; include/openssl/tls1.h&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ssl.=&amp;quot; include/openssl/new_header.h&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;my $crypto =&amp;quot;include/openssl/crypto.h&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$crypto.=&amp;quot; include/internal/o_dir.h&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$crypto.=&amp;quot; include/internal/new_header.h&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;##修改 Configure 文件&lt;/p&gt;
+&lt;p&gt;修改 Configure 文件，将密码算法添加到编译系统中。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$config&amp;#123;sdirs&amp;#125; = [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;objects&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;md2&amp;quot;, &amp;quot;md4&amp;quot;, &amp;quot;md5&amp;quot;, &amp;quot;sha&amp;quot;, &amp;quot;mdc2&amp;quot;, &amp;quot;hmac&amp;quot;, &amp;quot;ripemd&amp;quot;, &amp;quot;whrlpool&amp;quot;, &amp;quot;poly1305&amp;quot;, &amp;quot;blake2&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;des&amp;quot;, &amp;quot;aes&amp;quot;, &amp;quot;rc2&amp;quot;, &amp;quot;rc4&amp;quot;, &amp;quot;rc5&amp;quot;, &amp;quot;idea&amp;quot;, &amp;quot;bf&amp;quot;, &amp;quot;cast&amp;quot;, &amp;quot;camellia&amp;quot;, &amp;quot;seed&amp;quot;, &amp;quot;chacha&amp;quot;, &amp;quot;modes&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;bn&amp;quot;, &amp;quot;ec&amp;quot;, &amp;quot;rsa&amp;quot;, &amp;quot;dsa&amp;quot;, &amp;quot;dh&amp;quot;, &amp;quot;dso&amp;quot;, &amp;quot;engine&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;buffer&amp;quot;, &amp;quot;bio&amp;quot;, &amp;quot;stack&amp;quot;, &amp;quot;lhash&amp;quot;, &amp;quot;rand&amp;quot;, &amp;quot;err&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;evp&amp;quot;, &amp;quot;asn1&amp;quot;, &amp;quot;pem&amp;quot;, &amp;quot;x509&amp;quot;, &amp;quot;x509v3&amp;quot;, &amp;quot;conf&amp;quot;, &amp;quot;txt_db&amp;quot;, &amp;quot;pkcs7&amp;quot;, &amp;quot;pkcs12&amp;quot;, &amp;quot;comp&amp;quot;, &amp;quot;ocsp&amp;quot;, &amp;quot;ui&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;cms&amp;quot;, &amp;quot;ts&amp;quot;, &amp;quot;srp&amp;quot;, &amp;quot;cmac&amp;quot;, &amp;quot;ct&amp;quot;, &amp;quot;async&amp;quot;, &amp;quot;kdf&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;sm3&amp;quot;, &amp;quot;sms4&amp;quot;, &amp;quot;kdf2&amp;quot;, &amp;quot;ecies&amp;quot;, &amp;quot;ffx&amp;quot;, &amp;quot;sm2&amp;quot;, &amp;quot;paillier&amp;quot;, &amp;quot;cpk&amp;quot;, &amp;quot;otp&amp;quot;, &amp;quot;gmapi&amp;quot;, &amp;quot;ec2&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;bfibe&amp;quot;, &amp;quot;bb1ibe&amp;quot;, &amp;quot;sm9&amp;quot;, &amp;quot;saf&amp;quot;, &amp;quot;sdf&amp;quot;, &amp;quot;skf&amp;quot;, &amp;quot;sof&amp;quot;, &amp;quot;zuc&amp;quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;quot;serpent&amp;quot;, &amp;quot;speck&amp;quot;, &amp;quot;base58&amp;quot;,&amp;quot;new_crypto&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ];&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;更新符号文件&quot;&gt;&lt;a href=&quot;#更新符号文件&quot; class=&quot;headerlink&quot; title=&quot;更新符号文件&quot;&gt;&lt;/a&gt;更新符号文件&lt;/h2&gt;&lt;p&gt;运行如下指令，就会将新定义的密码算法和 SSL 算法中新增的函数添加到符号文件中。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;make update&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在做的工作需要给 GMSSL 密码库添加自有的加密算法和 ssl 算法。因此对 GMSSL 做了一些研究，GMSSL 是 OpenSSL 的 一个分支，它增加了包括 SM2、SM3、SM4在内的国密算法，以及国密的 SSL 加密信道，加密套件为 ECDSA-SM2-SM
+    
+    </summary>
+    
+    
+      <category term="GmSSL" scheme="http://32t.github.io/tags/GmSSL/"/>
+    
+  </entry>
   
   <entry>
     <title>Python import 问题</title>
@@ -690,28 +725,6 @@
   </entry>
   
   <entry>
-    <title>密码学的新方向笔记</title>
-    <link href="http://32t.github.io/2016/03/11/Hello-world-again/"/>
-    <id>http://32t.github.io/2016/03/11/Hello-world-again/</id>
-    <published>2016-03-11T06:51:12.000Z</published>
-    <updated>2016-03-19T16:07:25.000Z</updated>
-    
-    <content type="html">&lt;p&gt;密码学的新方向《NEW DIRECTIONS IN CRYPTOGRAPHY》是Deffie 和 Hellman两位大神于1976年所写的论文，&lt;br&gt;论文介绍了&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;密码学的新方向《NEW DIRECTIONS IN CRYPTOGRAPHY》是Deffie 和 Hellman两位大神于1976年所写的论文，&lt;br&gt;论文介绍了&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-      <category term="密码学 论文" scheme="http://32t.github.io/tags/%E5%AF%86%E7%A0%81%E5%AD%A6-%E8%AE%BA%E6%96%87/"/>
-    
-  </entry>
-  
-  <entry>
     <title>统计学笔记</title>
     <link href="http://32t.github.io/2016/03/11/ISLR_chap3/"/>
     <id>http://32t.github.io/2016/03/11/ISLR_chap3/</id>
@@ -744,6 +757,28 @@
       <category term="统计学" scheme="http://32t.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
     
       <category term="R" scheme="http://32t.github.io/tags/R/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>密码学的新方向笔记</title>
+    <link href="http://32t.github.io/2016/03/11/Hello-world-again/"/>
+    <id>http://32t.github.io/2016/03/11/Hello-world-again/</id>
+    <published>2016-03-11T06:51:12.000Z</published>
+    <updated>2016-03-19T16:07:25.000Z</updated>
+    
+    <content type="html">&lt;p&gt;密码学的新方向《NEW DIRECTIONS IN CRYPTOGRAPHY》是Deffie 和 Hellman两位大神于1976年所写的论文，&lt;br&gt;论文介绍了&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;密码学的新方向《NEW DIRECTIONS IN CRYPTOGRAPHY》是Deffie 和 Hellman两位大神于1976年所写的论文，&lt;br&gt;论文介绍了&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="密码学 论文" scheme="http://32t.github.io/tags/%E5%AF%86%E7%A0%81%E5%AD%A6-%E8%AE%BA%E6%96%87/"/>
     
   </entry>
   

@@ -79,7 +79,7 @@
 						<li>Links</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/GmSSL/" style="font-size: 10px;">GmSSL</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
 					</div>
 				</section>
 				
@@ -205,6 +205,77 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-GmSSL-添加新算法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/16/GmSSL-添加新算法/" class="article-date">
+  	<time datetime="2017-07-16T15:07:01.000Z" itemprop="datePublished">2017-07-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/16/GmSSL-添加新算法/">GmSSL 添加新算法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在做的工作需要给 GMSSL 密码库添加自有的加密算法和 ssl 算法。因此对 GMSSL 做了一些研究，GMSSL 是 OpenSSL 的 一个分支，它增加了包括 SM2、SM3、SM4在内的国密算法，以及国密的 SSL 加密信道，加密套件为 ECDSA-SM2-SM3-SM4。</p>
+<h2 id="增加算法头文件"><a href="#增加算法头文件" class="headerlink" title="增加算法头文件"></a>增加算法头文件</h2><p>算法头文件中包括了我们需要添加的加密算法和 ssl 算法。</p>
+<p>具体需要在include/openssl 目录下新建文件 new_header.h</p>
+<p>在 new_header.h 中定义新的加密算法和 ssl 算法。内容大致如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int new_crypto();</span><br><span class="line">int new_ssl();</span><br></pre></td></tr></table></figure></p>
+<h2 id="增加密码算法"><a href="#增加密码算法" class="headerlink" title="增加密码算法"></a>增加密码算法</h2><p>在 crypto 目录下新建算法目录 new_crypto<br>在 new_crypto 目录下新建文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crypto/new_crypto</span><br><span class="line">+-- build.info</span><br><span class="line">+-- crypto_src.c</span><br></pre></td></tr></table></figure>
+<p>build.info 是编译所需的文件，文件内容一般如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LIBS=../../libcrypto</span><br><span class="line">SOURCE[../../libcrypto]=\</span><br><span class="line">        crypto_src.c</span><br></pre></td></tr></table></figure></p>
+<p>crypto_src.c 为算法的具体代码实现，内容大致如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;openssl/new_header.h&gt;</span><br><span class="line">int new_crypto()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="增加-ssl-算法文件"><a href="#增加-ssl-算法文件" class="headerlink" title="增加 ssl 算法文件"></a>增加 ssl 算法文件</h2><p>在 ssl目录下新建ssl算法代码文件ssl_new.c，内容大致如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;openssl/new_header.h&gt;</span><br><span class="line">int new_ssl()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##修改符号文件<br>修改 util/mkdef.pl，在对应代码后添加新增头文件new_header：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">my $ssl=&quot;include/openssl/ssl.h&quot;;</span><br><span class="line">$ssl.=&quot; include/openssl/tls1.h&quot;;</span><br><span class="line">$ssl.=&quot; include/openssl/new_header.h&quot;;</span><br><span class="line"></span><br><span class="line">my $crypto =&quot;include/openssl/crypto.h&quot;;</span><br><span class="line">$crypto.=&quot; include/internal/o_dir.h&quot;;</span><br><span class="line">$crypto.=&quot; include/internal/new_header.h&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>##修改 Configure 文件</p>
+<p>修改 Configure 文件，将密码算法添加到编译系统中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$config&#123;sdirs&#125; = [</span><br><span class="line">    &quot;objects&quot;,</span><br><span class="line">    &quot;md2&quot;, &quot;md4&quot;, &quot;md5&quot;, &quot;sha&quot;, &quot;mdc2&quot;, &quot;hmac&quot;, &quot;ripemd&quot;, &quot;whrlpool&quot;, &quot;poly1305&quot;, &quot;blake2&quot;,</span><br><span class="line">    &quot;des&quot;, &quot;aes&quot;, &quot;rc2&quot;, &quot;rc4&quot;, &quot;rc5&quot;, &quot;idea&quot;, &quot;bf&quot;, &quot;cast&quot;, &quot;camellia&quot;, &quot;seed&quot;, &quot;chacha&quot;, &quot;modes&quot;,</span><br><span class="line">    &quot;bn&quot;, &quot;ec&quot;, &quot;rsa&quot;, &quot;dsa&quot;, &quot;dh&quot;, &quot;dso&quot;, &quot;engine&quot;,</span><br><span class="line">    &quot;buffer&quot;, &quot;bio&quot;, &quot;stack&quot;, &quot;lhash&quot;, &quot;rand&quot;, &quot;err&quot;,</span><br><span class="line">    &quot;evp&quot;, &quot;asn1&quot;, &quot;pem&quot;, &quot;x509&quot;, &quot;x509v3&quot;, &quot;conf&quot;, &quot;txt_db&quot;, &quot;pkcs7&quot;, &quot;pkcs12&quot;, &quot;comp&quot;, &quot;ocsp&quot;, &quot;ui&quot;,</span><br><span class="line">    &quot;cms&quot;, &quot;ts&quot;, &quot;srp&quot;, &quot;cmac&quot;, &quot;ct&quot;, &quot;async&quot;, &quot;kdf&quot;,</span><br><span class="line">    &quot;sm3&quot;, &quot;sms4&quot;, &quot;kdf2&quot;, &quot;ecies&quot;, &quot;ffx&quot;, &quot;sm2&quot;, &quot;paillier&quot;, &quot;cpk&quot;, &quot;otp&quot;, &quot;gmapi&quot;, &quot;ec2&quot;,</span><br><span class="line">    &quot;bfibe&quot;, &quot;bb1ibe&quot;, &quot;sm9&quot;, &quot;saf&quot;, &quot;sdf&quot;, &quot;skf&quot;, &quot;sof&quot;, &quot;zuc&quot;,</span><br><span class="line">    &quot;serpent&quot;, &quot;speck&quot;, &quot;base58&quot;,&quot;new_crypto&quot;</span><br><span class="line">    ];</span><br></pre></td></tr></table></figure></p>
+<h2 id="更新符号文件"><a href="#更新符号文件" class="headerlink" title="更新符号文件"></a>更新符号文件</h2><p>运行如下指令，就会将新定义的密码算法和 SSL 算法中新增的函数添加到符号文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make update</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GmSSL/">GmSSL</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Python-import-问题" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -762,67 +833,6 @@
 
 
   
-    <article id="post-mongo-optimization" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/15/mongo-optimization/" class="article-date">
-  	<time datetime="2016-03-15T08:11:20.000Z" itemprop="datePublished">2016-03-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/15/mongo-optimization/">mongo性能调优</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近公司在做海外业务的拓展，我负责了海外数据的抓取、分析和接口工作，随着开发的推进和数据量的增加</p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能/">性能</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/15/mongo-optimization/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -833,7 +843,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 Simon
+    		&copy; 2017 Simon
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Powered by Hexo</a>  
