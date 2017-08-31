@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/GmSSl/" style="font-size: 10px;">GmSSl</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 20px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/GmSSl/" style="font-size: 10px;">GmSSl</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/chromium/" style="font-size: 10px;">chromium</a> <a href="/tags/gclient/" style="font-size: 10px;">gclient</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/webrtc/" style="font-size: 10px;">webrtc</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 20px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
 					</div>
 				</section>
 				
@@ -205,6 +205,136 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-how-to-server-django-static-file" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/29/how-to-server-django-static-file/" class="article-date">
+  	<time datetime="2016-03-29T04:32:36.000Z" itemprop="datePublished">2016-03-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/29/how-to-server-django-static-file/">如何在 Django 中设置静态文件</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在使用 Django 建设网站的过程中通常需要提供其他一些静态文件，例如 css,js,img 等，然而众所周知，django 无法像 apache 或者 iis 一样直接放上去就可以用，成为了众多新手的一大门槛，笔者也是被折磨了多次。花了一上午时间深入研究了 Django 相关官方文档，记录下来顺便整理一下。</p>
+<h2 id="静态文件提供的两种方式"><a href="#静态文件提供的两种方式" class="headerlink" title="静态文件提供的两种方式"></a>静态文件提供的两种方式</h2><p>Django 提供了 django.contrib.staticfiles 来帮助用户管理静态文件。</p>
+<h3 id="APP-内部文件"><a href="#APP-内部文件" class="headerlink" title="APP 内部文件"></a>APP 内部文件</h3><ol>
+<li>确保django.contrib.staticfiles 在 settting 文件的 INSTALLED_APPS中</li>
+<li>在 setting 文件中，定义变量 STATIC_URL<br> STATIC_URL = ‘/static/‘</li>
+<li>在 my_site/my_app/目录下新建文件夹static/my_app/ 然后在其下面存放文件 myexample.jpg文件</li>
+<li><p>在模板中使用的时候，可以有两种使用方式</p>
+<ol>
+<li>硬编码<br>直接硬编码为/static/my_app/myexample.jpg 这样。注意，Django 会查找所有 app 目录下的static/my_app 文件夹，例如你有两个 app，my_app1,my_app2<br>目录结构如下：<br>my_app1<br>-static<br>—my_app<br>—–myexample.jpg<br>my_app2<br>-static<br>—my_app<br>—–myexample.jpg</li>
+</ol>
+<p>那么这样使用的时候，会直接使用第一个目录下的文件</p>
+<ol>
+<li>软编码<br>也可以使用 static 模板标签来根据相对路径生成 url.</li>
+</ol>
+</li>
+</ol>
+<h3 id="全局文件"><a href="#全局文件" class="headerlink" title="全局文件"></a>全局文件</h3><h3 id="Django查找静态文件的顺序问题"><a href="#Django查找静态文件的顺序问题" class="headerlink" title="Django查找静态文件的顺序问题"></a>Django查找静态文件的顺序问题</h3><p>首先会查找各个 app 下面的 STATIC_URL 文件所指定的目录</p>
+<h3 id="命名空间-namespace-的问题"><a href="#命名空间-namespace-的问题" class="headerlink" title="命名空间 namespace 的问题"></a>命名空间 namespace 的问题</h3><h2 id="测试环境中使用"><a href="#测试环境中使用" class="headerlink" title="测试环境中使用"></a>测试环境中使用</h2><h2 id="生产环境中使用"><a href="#生产环境中使用" class="headerlink" title="生产环境中使用"></a>生产环境中使用</h2>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-rmbp13-screen-fix" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/17/rmbp13-screen-fix/" class="article-date">
+  	<time datetime="2016-03-17T08:11:21.000Z" itemprop="datePublished">2016-03-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/17/rmbp13-screen-fix/">RMBP13涂层脱落换屏记</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前就听说13款的RMBP反光涂层掉落的问题，当时也没太注意，擦屏幕的方法也比较暴力，直到前两天自己也中了招，一擦之下涂层尽落，再擦一下，落得更多，于是开始了漫漫换屏路。在此记录一下，给同样问题的小伙伴参考。</p>
+<h2 id="预约Genius-Bar"><a href="#预约Genius-Bar" class="headerlink" title="预约Genius Bar"></a>预约Genius Bar</h2><p>首先给400-666-8800打了电话，在说明了问题后，对方会询问序列号和购买时间，同时也会问购买凭证是否还在（实际上用不到），由于涂层脱落问题苹果官方是可以免费换屏的，于是让客服帮忙预约了西单大悦城的genius bar，并记录了邮箱、姓名和电话。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Genius-Bar/">Genius Bar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RMBP13/">RMBP13</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/涂层脱落/">涂层脱落</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/17/rmbp13-screen-fix/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-mongo-optimization" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -329,6 +459,63 @@
 
 
   
+    <article id="post-Hello-world-again" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/11/Hello-world-again/" class="article-date">
+  	<time datetime="2016-03-11T06:51:12.000Z" itemprop="datePublished">2016-03-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/11/Hello-world-again/">密码学的新方向笔记</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>密码学的新方向《NEW DIRECTIONS IN CRYPTOGRAPHY》是Deffie 和 Hellman两位大神于1976年所写的论文，<br>论文介绍了</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密码学-论文/">密码学 论文</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-ISLR_chap3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -371,63 +558,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/R/">R</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/统计学/">统计学</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Hello-world-again" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/11/Hello-world-again/" class="article-date">
-  	<time datetime="2016-03-11T06:51:12.000Z" itemprop="datePublished">2016-03-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/11/Hello-world-again/">密码学的新方向笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>密码学的新方向《NEW DIRECTIONS IN CRYPTOGRAPHY》是Deffie 和 Hellman两位大神于1976年所写的论文，<br>论文介绍了</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密码学-论文/">密码学 论文</a></li></ul>
 	</div>
 
       

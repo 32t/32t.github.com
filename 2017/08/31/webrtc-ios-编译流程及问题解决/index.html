@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>webrtc-ios 编译流程及问题解决 | 32bits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Webrtc 编译注1：本文档适用webrtc-ios源码的下载和编译；
+注2：下载编译所使用的操作系统为mac 终端;
+下载编译工具Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webrtc-ios 编译流程及问题解决">
+<meta property="og:url" content="http://32t.github.io/2017/08/31/webrtc-ios-编译流程及问题解决/index.html">
+<meta property="og:site_name" content="32bits">
+<meta property="og:description" content="Webrtc 编译注1：本文档适用webrtc-ios源码的下载和编译；
+注2：下载编译所使用的操作系统为mac 终端;
+下载编译工具Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码">
+<meta property="og:updated_time" content="2017-08-31T13:22:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webrtc-ios 编译流程及问题解决">
+<meta name="twitter:description" content="Webrtc 编译注1：本文档适用webrtc-ios源码的下载和编译；
+注2：下载编译所使用的操作系统为mac 终端;
+下载编译工具Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码">
+  
+    <link rel="alternative" href="/atom.xml" title="32bits" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/Geek.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://ww2.sinaimg.cn/large/63e8a615jw1f22m6ygcynj20go0gowf1.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Simon</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Smart is new sex</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/zhaopku09" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Genius-Bar/" style="font-size: 10px;">Genius Bar</a> <a href="/tags/GmSSl/" style="font-size: 10px;">GmSSl</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/MD5/" style="font-size: 10px;">MD5</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PBKDF/" style="font-size: 10px;">PBKDF</a> <a href="/tags/PRF/" style="font-size: 10px;">PRF</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/RMBP13/" style="font-size: 10px;">RMBP13</a> <a href="/tags/chromium/" style="font-size: 10px;">chromium</a> <a href="/tags/gclient/" style="font-size: 10px;">gclient</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/uWSGI/" style="font-size: 10px;">uWSGI</a> <a href="/tags/webrtc/" style="font-size: 10px;">webrtc</a> <a href="/tags/反序列化/" style="font-size: 10px;">反序列化</a> <a href="/tags/密码学/" style="font-size: 20px;">密码学</a> <a href="/tags/密码学-论文/" style="font-size: 10px;">密码学 论文</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/涂层脱落/" style="font-size: 10px;">涂层脱落</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/统计学/" style="font-size: 10px;">统计学</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Simon</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://ww2.sinaimg.cn/large/63e8a615jw1f22m6ygcynj20go0gowf1.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Simon</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Smart is new sex</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/zhaopku09" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-webrtc-ios-编译流程及问题解决" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/31/webrtc-ios-编译流程及问题解决/" class="article-date">
+  	<time datetime="2017-08-31T12:58:05.000Z" itemprop="datePublished">2017-08-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      webrtc-ios 编译流程及问题解决
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chromium/">chromium</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gclient/">gclient</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webrtc/">webrtc</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Webrtc-编译"><a href="#Webrtc-编译" class="headerlink" title="Webrtc 编译"></a>Webrtc 编译</h2><p>注1：本文档适用webrtc-ios源码的下载和编译；</p>
+<p>注2：下载编译所使用的操作系统为mac 终端;</p>
+<h3 id="下载编译工具"><a href="#下载编译工具" class="headerlink" title="下载编译工具"></a>下载编译工具</h3><p>Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码进行checkout。这个depot_rools包里面包含了gclient、gcl、git-cl、repo等工具。</p>
+<p>下载depot_tools工具包并放到标准路径PATH上：<br>首先确保mac上安装了Git 2.2.1以上版本，以及Python 2.7以上版本；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
+<p>修改root目录中的.bash_profile文件，.bash_profile文件是一个隐藏文件，可在root目录下使用命令ls -a将隐藏文件显示出来，然后vi .bash_profile 进行编辑，增加：export PATH=$PATH:‘pwd’/depot_tools:$PATH，然后按Esc + shift + 冒号，输入wq，进行保存。注意一定要把depot_tools的位置放在PATH的最前面；</p>
+<p>参考：<a href="https://dev.chromium.org/developers/how-tos/install-depot-tools" target="_blank" rel="external">https://dev.chromium.org/developers/how-tos/install-depot-tools</a></p>
+<h3 id="下载-webrtc-源代码"><a href="#下载-webrtc-源代码" class="headerlink" title="下载 webrtc 源代码"></a>下载 webrtc 源代码</h3><p>下载webrtc-ios代码及编译流程（首先要先按照以上步骤下载depot_tools ）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir webrtc-ios</span><br><span class="line"></span><br><span class="line">cd webrtc-ios</span><br><span class="line"></span><br><span class="line">fetch --nohooks webrtc_ios</span><br></pre></td></tr></table></figure>
+<p>gclient sync//代码下载过程中如果发生中断，使用gclient sync同步就可以了</p>
+<ol>
+<li>编译Mac OS AppRTCMobile</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/Debug</span><br><span class="line"></span><br><span class="line">ninja -C out/Debug</span><br></pre></td></tr></table></figure>
+<ol>
+<li>编译64位真机 AppRTCMobile</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/ios_64 --args=&apos;target_os=&quot;ios&quot; target_cpu=&quot;arm64&quot;&apos;</span><br><span class="line">ninja -C out/ios_64</span><br></pre></td></tr></table></figure>
+<p>WebRTC代码后期更新的三种方式（在src目录下）：</p>
+<ol>
+<li><p>当前代码在某个分支下进行维护，使用git pull可以拉取远程仓库的最新更新；</p>
+</li>
+<li><p>当前代码不在分支下，使用git fetch取下来最新的git仓库更新；</p>
+</li>
+<li><p>需要定期更新依赖或者其他第三方库，使用gclient sync命令；</p>
+</li>
+</ol>
+<p>参考：<a href="https://webrtc.org/native-code/ios/" target="_blank" rel="external">https://webrtc.org/native-code/ios/</a></p>
+<h2 id="附录："><a href="#附录：" class="headerlink" title="附录："></a>附录：</h2><ol>
+<li>webrtc-ios版本下载过程中 $ gclient sync时出现的问题</li>
+</ol>
+<p>问题描述：</p>
+<p>出现Hook ‘download_from_google_storage –directory –recursive –num_threads=10 –no_auth –quiet –bucket chromium-webrtc-resources src/resources’ took 8760.95 secs 后，不执行了。</p>
+<p>解决办法：</p>
+<p>找到src/DEPS文件，将下面这几行代码注释掉<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Download test resources, i.e. video and audio files from Google Storage.</span></span><br><span class="line"></span><br><span class="line"> <span class="string">'pattern'</span>: <span class="string">'.'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'action'</span>: [<span class="string">'download_from_google_storage'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--directory'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--recursive'</span>,</span><br><span class="line"></span><br><span class="line">   <span class="string">'--num_threads=10'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--no_auth'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--quiet'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--bucket'</span>, <span class="string">'chromium-webrtc-resources'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'src/resources'</span>]</span><br><span class="line"></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>下载代码过程中遇到如下错误：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">________ running <span class="string">'download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-gn -s src/buildtools/mac/gn.sha1'</span> <span class="keyword">in</span> <span class="string">'/Users/simon/webrtc'</span></span><br><span class="line">Failed to fetch file gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b <span class="keyword">for</span> src/buildtools/mac/gn. [Err: /Library/Python/2.7/site-packages/cryptography/hazmat/backends/__init__.py:7: UserWarning: Module six was already imported from /Users/simon/code/depot_tools/external_bin/gsutil/gsutil_4.26/gsutil/third_party/six/six.py, but /Library/Python/2.7/site-packages/six-1.10.0-py2.7.egg is being added to sys.path</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>将gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b中的 gs替换为 <a href="https://storage.googleapis.com/" target="_blank" rel="external">https://storage.googleapis.com/</a> 就可以直接在浏览器下载了。前提当然是你还开着翻墙代理。所以任务就变成了下载下面这个地址的文件到刚刚那个目录。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>下载 clang 等文件出错</li>
+</ol>
+<p>可以在 bash 中设置代理来解决</p>
+<ol>
+<li>gclient sync长时间不响应</li>
+</ol>
+<p>遇到如下情况长时间不响应</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">________ running <span class="string">'download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-luci -d src/tools/luci-go/mac64'</span> <span class="keyword">in</span> <span class="string">'/Users/simon/webrtc'</span></span><br></pre></td></tr></table></figure>
+<p>先到src/tools/luci-go/mac64找对应的 sha1文件，此处为isolate.sha1文件，文件内容为1966687828a068eee4c5da45bbb8afd91cddda6f，这个是对应文件的散列值，也是文件的标识。 google 通过luci-go标识工具的名称，用散列值标识工具的版本。</p>
+<p>然后用luci-go替换下面 url 中的chromium-gn，用 1966687828a068eee4c5da45bbb8afd91cddda6f替换c2c934d4dda1f470a6511b1015dda9a9fb1ce50b，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">原链接：</span><br><span class="line">https://storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span><br><span class="line">替换后的链接：</span><br><span class="line">https://storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span><br></pre></td></tr></table></figure></p>
+<p>从替换后的链接出下载文件到src/tools/luci-go/mac64中，命名为isolate。然后重新执行 gclient sync 即可。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/30/Webrtc 编译/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="webrtc-ios-编译流程及问题解决" data-title="webrtc-ios 编译流程及问题解决" data-url="http://32t.github.io/2017/08/31/webrtc-ios-编译流程及问题解决/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 Simon
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Powered by Hexo</a>  
+          Theme 
+          <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> 
+          Modified By
+          <a href="http://32t.github.io" target="_blank">Simon</a> 
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
