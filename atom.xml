@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://32t.github.io/"/>
-  <updated>2017-08-31T13:24:17.000Z</updated>
+  <updated>2017-08-31T13:25:56.000Z</updated>
   <id>http://32t.github.io/</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="http://32t.github.io/2017/08/31/webrtc-ios-%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B%E5%8F%8A%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
     <id>http://32t.github.io/2017/08/31/webrtc-ios-编译流程及问题解决/</id>
     <published>2017-08-31T12:58:05.000Z</published>
-    <updated>2017-08-31T13:24:17.000Z</updated>
+    <updated>2017-08-31T13:25:56.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Webrtc-编译&quot;&gt;&lt;a href=&quot;#Webrtc-编译&quot; class=&quot;headerlink&quot; title=&quot;Webrtc 编译&quot;&gt;&lt;/a&gt;Webrtc 编译&lt;/h2&gt;&lt;p&gt;注1：本文档适用webrtc-ios源码的下载和编译；&lt;/p&gt;
 &lt;p&gt;注2：下载编译所使用的操作系统为mac 终端;&lt;/p&gt;
 &lt;h3 id=&quot;下载编译工具&quot;&gt;&lt;a href=&quot;#下载编译工具&quot; class=&quot;headerlink&quot; title=&quot;下载编译工具&quot;&gt;&lt;/a&gt;下载编译工具&lt;/h3&gt;&lt;p&gt;Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码进行checkout。这个depot_rools包里面包含了gclient、gcl、git-cl、repo等工具。&lt;/p&gt;
 &lt;p&gt;下载depot_tools工具包并放到标准路径PATH上：&lt;br&gt;首先确保mac上安装了Git 2.2.1以上版本，以及Python 2.7以上版本；&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;修改root目录中的.bash_profile文件，.bash_profile文件是一个隐藏文件，可在root目录下使用命令ls -a将隐藏文件显示出来，然后vi .bash_profile 进行编辑，增加：export PATH=$PATH:‘pwd’/depot_tools:$PATH，然后按Esc + shift + 冒号，输入wq，进行保存。注意一定要把depot_tools的位置放在PATH的最前面；&lt;/p&gt;
 &lt;p&gt;参考：&lt;a href=&quot;https://dev.chromium.org/developers/how-tos/install-depot-tools&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://dev.chromium.org/developers/how-tos/install-depot-tools&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;下载-webrtc-源代码&quot;&gt;&lt;a href=&quot;#下载-webrtc-源代码&quot; class=&quot;headerlink&quot; title=&quot;下载 webrtc 源代码&quot;&gt;&lt;/a&gt;下载 webrtc 源代码&lt;/h3&gt;&lt;p&gt;下载webrtc-ios代码及编译流程（首先要先按照以上步骤下载depot_tools ）：&lt;/p&gt;
@@ -80,7 +81,10 @@
     <summary type="html">
     
       &lt;h2 id=&quot;Webrtc-编译&quot;&gt;&lt;a href=&quot;#Webrtc-编译&quot; class=&quot;headerlink&quot; title=&quot;Webrtc 编译&quot;&gt;&lt;/a&gt;Webrtc 编译&lt;/h2&gt;&lt;p&gt;注1：本文档适用webrtc-ios源码的下载和编译；&lt;/p&gt;
-&lt;p&gt;注2：下载编译
+&lt;p&gt;注2：下载编译所使用的操作系统为mac 终端;&lt;/p&gt;
+&lt;h3 id=&quot;下载编译工具&quot;&gt;&lt;a href=&quot;#下载编译工具&quot; class=&quot;headerlink&quot; title=&quot;下载编译工具&quot;&gt;&lt;/a&gt;下载编译工具&lt;/h3&gt;&lt;p&gt;Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码进行checkout。这个depot_rools包里面包含了gclient、gcl、git-cl、repo等工具。&lt;/p&gt;
+&lt;p&gt;下载depot_tools工具包并放到标准路径PATH上：&lt;br&gt;首先确保mac上安装了Git 2.2.1以上版本，以及Python 2.7以上版本；&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -92,82 +96,6 @@
       <category term="chromium" scheme="http://32t.github.io/tags/chromium/"/>
     
       <category term="gclient" scheme="http://32t.github.io/tags/gclient/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://32t.github.io/2017/08/30/Webrtc%20%E7%BC%96%E8%AF%91/"/>
-    <id>http://32t.github.io/2017/08/30/Webrtc 编译/</id>
-    <published>2017-08-30T15:54:38.000Z</published>
-    <updated>2017-08-31T13:24:43.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;Webrtc-编译&quot;&gt;&lt;a href=&quot;#Webrtc-编译&quot; class=&quot;headerlink&quot; title=&quot;Webrtc 编译&quot;&gt;&lt;/a&gt;Webrtc 编译&lt;/h2&gt;&lt;p&gt;注1：本文档适用webrtc-ios源码的下载和编译；&lt;/p&gt;
-&lt;p&gt;注2：下载编译所使用的操作系统为mac 终端;&lt;/p&gt;
-&lt;h3 id=&quot;下载编译工具&quot;&gt;&lt;a href=&quot;#下载编译工具&quot; class=&quot;headerlink&quot; title=&quot;下载编译工具&quot;&gt;&lt;/a&gt;下载编译工具&lt;/h3&gt;&lt;p&gt;Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码进行checkout。这个depot_rools包里面包含了gclient、gcl、git-cl、repo等工具。&lt;/p&gt;
-&lt;p&gt;下载depot_tools工具包并放到标准路径PATH上：&lt;br&gt;首先确保mac上安装了Git 2.2.1以上版本，以及Python 2.7以上版本；&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;修改root目录中的.bash_profile文件，.bash_profile文件是一个隐藏文件，可在root目录下使用命令ls -a将隐藏文件显示出来，然后vi .bash_profile 进行编辑，增加：export PATH=$PATH:‘pwd’/depot_tools:$PATH，然后按Esc + shift + 冒号，输入wq，进行保存。注意一定要把depot_tools的位置放在PATH的最前面；&lt;/p&gt;
-&lt;p&gt;参考：&lt;a href=&quot;https://dev.chromium.org/developers/how-tos/install-depot-tools&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://dev.chromium.org/developers/how-tos/install-depot-tools&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;下载-webrtc-源代码&quot;&gt;&lt;a href=&quot;#下载-webrtc-源代码&quot; class=&quot;headerlink&quot; title=&quot;下载 webrtc 源代码&quot;&gt;&lt;/a&gt;下载 webrtc 源代码&lt;/h3&gt;&lt;p&gt;下载webrtc-ios代码及编译流程（首先要先按照以上步骤下载depot_tools ）：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mkdir webrtc-ios&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cd webrtc-ios&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fetch --nohooks webrtc_ios&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;gclient sync//代码下载过程中如果发生中断，使用gclient sync同步就可以了&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;编译Mac OS AppRTCMobile&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;gn gen out/Debug&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ninja -C out/Debug&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;编译64位真机 AppRTCMobile&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;gn gen out/ios_64 --args=&amp;apos;target_os=&amp;quot;ios&amp;quot; target_cpu=&amp;quot;arm64&amp;quot;&amp;apos;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ninja -C out/ios_64&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;WebRTC代码后期更新的三种方式（在src目录下）：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;当前代码在某个分支下进行维护，使用git pull可以拉取远程仓库的最新更新；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;当前代码不在分支下，使用git fetch取下来最新的git仓库更新；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;需要定期更新依赖或者其他第三方库，使用gclient sync命令；&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;参考：&lt;a href=&quot;https://webrtc.org/native-code/ios/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://webrtc.org/native-code/ios/&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;附录：&quot;&gt;&lt;a href=&quot;#附录：&quot; class=&quot;headerlink&quot; title=&quot;附录：&quot;&gt;&lt;/a&gt;附录：&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;webrtc-ios版本下载过程中 $ gclient sync时出现的问题&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;问题描述：&lt;/p&gt;
-&lt;p&gt;出现Hook ‘download_from_google_storage –directory –recursive –num_threads=10 –no_auth –quiet –bucket chromium-webrtc-resources src/resources’ took 8760.95 secs 后，不执行了。&lt;/p&gt;
-&lt;p&gt;解决办法：&lt;/p&gt;
-&lt;p&gt;找到src/DEPS文件，将下面这几行代码注释掉&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;# Download test resources, i.e. video and audio files from Google Storage.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;string&quot;&gt;&#39;pattern&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;.&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;action&#39;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&#39;download_from_google_storage&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;string&quot;&gt;&#39;--directory&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;--recursive&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;string&quot;&gt;&#39;--num_threads=10&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;string&quot;&gt;&#39;--no_auth&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;--quiet&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;--bucket&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;chromium-webrtc-resources&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;string&quot;&gt;&#39;src/resources&#39;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;下载代码过程中遇到如下错误：&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;________ running &lt;span class=&quot;string&quot;&gt;&#39;download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-gn -s src/buildtools/mac/gn.sha1&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;/Users/simon/webrtc&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Failed to fetch file gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; src/buildtools/mac/gn. [Err: /Library/Python/2.7/site-packages/cryptography/hazmat/backends/__init__.py:7: UserWarning: Module six was already imported from /Users/simon/code/depot_tools/external_bin/gsutil/gsutil_4.26/gsutil/third_party/six/six.py, but /Library/Python/2.7/site-packages/six-1.10.0-py2.7.egg is being added to sys.path&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;将gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b中的 gs替换为 &lt;a href=&quot;https://storage.googleapis.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://storage.googleapis.com/&lt;/a&gt; 就可以直接在浏览器下载了。前提当然是你还开着翻墙代理。所以任务就变成了下载下面这个地址的文件到刚刚那个目录。&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;https:&lt;span class=&quot;comment&quot;&gt;//storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;下载 clang 等文件出错&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;可以在 bash 中设置代理来解决&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;gclient sync长时间不响应&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;遇到如下情况长时间不响应&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;________ running &lt;span class=&quot;string&quot;&gt;&#39;download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-luci -d src/tools/luci-go/mac64&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;/Users/simon/webrtc&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;先到src/tools/luci-go/mac64找对应的 sha1文件，此处为isolate.sha1文件，文件内容为1966687828a068eee4c5da45bbb8afd91cddda6f，这个是对应文件的散列值，也是文件的标识。 google 通过luci-go标识工具的名称，用散列值标识工具的版本。&lt;/p&gt;
-&lt;p&gt;然后用luci-go替换下面 url 中的chromium-gn，用 1966687828a068eee4c5da45bbb8afd91cddda6f替换c2c934d4dda1f470a6511b1015dda9a9fb1ce50b，&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;原链接：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;https://storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;替换后的链接：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;https://storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;从替换后的链接出下载文件到src/tools/luci-go/mac64中，命名为isolate。然后重新执行 gclient sync 即可。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Webrtc-编译&quot;&gt;&lt;a href=&quot;#Webrtc-编译&quot; class=&quot;headerlink&quot; title=&quot;Webrtc 编译&quot;&gt;&lt;/a&gt;Webrtc 编译&lt;/h2&gt;&lt;p&gt;注1：本文档适用webrtc-ios源码的下载和编译；&lt;/p&gt;
-&lt;p&gt;注2：下载编译所使用的操作系统为mac 终端;&lt;/p&gt;
-&lt;h3 id=&quot;下载编译工具&quot;&gt;&lt;a href=&quot;#下载编译工具&quot; class=&quot;headerlink&quot; title=&quot;下载编译工具&quot;&gt;&lt;/a&gt;下载编译工具&lt;/h3&gt;&lt;p&gt;Chromium和Chromium OS统一使用一个叫做depot_tools的工具的对其源码进行checkout的管理（这有点类似于Android使用repo工具对其源码进行管理一样），作为Chromium其中一个子模块的webrtc而言，也是使用这个工具对其代码进行checkout。这个depot_rools包里面包含了gclient、gcl、git-cl、repo等工具。&lt;/p&gt;
-&lt;p&gt;下载depot_tools工具包并放到标准路径PATH上：&lt;br&gt;首先确保mac上安装了Git 2.2.1以上版本，以及Python 2.7以上版本；&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;修改root目录中的.bash_profile文件，.bash_profile文件是一个隐藏文件，可在root目录下使用命令ls -a将隐藏文件显示出来，然后vi .bash_profile 进行编辑，增加：export PATH=$PATH:‘pwd’/depot_tools:$PATH，然后按Esc + shift + 冒号，输入wq，进行保存。注意一定要把depot_tools的位置放在PATH的最前面；&lt;/p&gt;
-&lt;p&gt;参考：&lt;a href=&quot;https://dev.chromium.org/developers/how-tos/install-depot-tools&quot;&gt;https://dev.chromium.org/developers/how-tos/install-depot-tools&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
     
   </entry>
   
