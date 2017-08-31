@@ -266,11 +266,12 @@
 <p>问题描述：</p>
 <p>出现Hook ‘download_from_google_storage –directory –recursive –num_threads=10 –no_auth –quiet –bucket chromium-webrtc-resources src/resources’ took 8760.95 secs 后，不执行了。</p>
 <p>解决办法：</p>
-<p>找到src/DEPS文件，将下面这几行代码注释掉<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Download test resources, i.e. video and audio files from Google Storage.</span></span><br><span class="line"></span><br><span class="line"> <span class="string">'pattern'</span>: <span class="string">'.'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'action'</span>: [<span class="string">'download_from_google_storage'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--directory'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--recursive'</span>,</span><br><span class="line"></span><br><span class="line">   <span class="string">'--num_threads=10'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--no_auth'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--quiet'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--bucket'</span>, <span class="string">'chromium-webrtc-resources'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'src/resources'</span>]</span><br><span class="line"></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>找到src/DEPS文件，将下面这几行代码注释掉</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Download test resources, i.e. video and audio files from Google Storage.</span></span><br><span class="line"></span><br><span class="line"> <span class="string">'pattern'</span>: <span class="string">'.'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'action'</span>: [<span class="string">'download_from_google_storage'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--directory'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--recursive'</span>,</span><br><span class="line"></span><br><span class="line">   <span class="string">'--num_threads=10'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--no_auth'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--quiet'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--bucket'</span>, <span class="string">'chromium-webrtc-resources'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'src/resources'</span>]</span><br><span class="line"></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <ol>
-<li>下载代码过程中遇到如下错误：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">________ running <span class="string">'download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-gn -s src/buildtools/mac/gn.sha1'</span> <span class="keyword">in</span> <span class="string">'/Users/simon/webrtc'</span></span><br><span class="line">Failed to fetch file gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b <span class="keyword">for</span> src/buildtools/mac/gn. [Err: /Library/Python/2.7/site-packages/cryptography/hazmat/backends/__init__.py:7: UserWarning: Module six was already imported from /Users/simon/code/depot_tools/external_bin/gsutil/gsutil_4.26/gsutil/third_party/six/six.py, but /Library/Python/2.7/site-packages/six-1.10.0-py2.7.egg is being added to sys.path</span><br></pre></td></tr></table></figure>
-</li>
+<li>下载代码过程中遇到如下错误：</li>
 </ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">________ running <span class="string">'download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-gn -s src/buildtools/mac/gn.sha1'</span> <span class="keyword">in</span> <span class="string">'/Users/simon/webrtc'</span></span><br><span class="line">Failed to fetch file gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b <span class="keyword">for</span> src/buildtools/mac/gn. [Err: /Library/Python/2.7/site-packages/cryptography/hazmat/backends/__init__.py:7: UserWarning: Module six was already imported from /Users/simon/code/depot_tools/external_bin/gsutil/gsutil_4.26/gsutil/third_party/six/six.py, but /Library/Python/2.7/site-packages/six-1.10.0-py2.7.egg is being added to sys.path</span><br></pre></td></tr></table></figure>
 <p>将gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b中的 gs替换为 <a href="https://storage.googleapis.com/" target="_blank" rel="external">https://storage.googleapis.com/</a> 就可以直接在浏览器下载了。前提当然是你还开着翻墙代理。所以任务就变成了下载下面这个地址的文件到刚刚那个目录。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span></span><br></pre></td></tr></table></figure></p>
 <ol>
 <li>下载 clang 等文件出错</li>
@@ -335,53 +336,7 @@
 <p>下载depot_tools工具包并放到标准路径PATH上：<br>首先确保mac上安装了Git 2.2.1以上版本，以及Python 2.7以上版本；</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
 <p>修改root目录中的.bash_profile文件，.bash_profile文件是一个隐藏文件，可在root目录下使用命令ls -a将隐藏文件显示出来，然后vi .bash_profile 进行编辑，增加：export PATH=$PATH:‘pwd’/depot_tools:$PATH，然后按Esc + shift + 冒号，输入wq，进行保存。注意一定要把depot_tools的位置放在PATH的最前面；</p>
-<p>参考：<a href="https://dev.chromium.org/developers/how-tos/install-depot-tools" target="_blank" rel="external">https://dev.chromium.org/developers/how-tos/install-depot-tools</a></p>
-<h3 id="下载-webrtc-源代码"><a href="#下载-webrtc-源代码" class="headerlink" title="下载 webrtc 源代码"></a>下载 webrtc 源代码</h3><p>下载webrtc-ios代码及编译流程（首先要先按照以上步骤下载depot_tools ）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir webrtc-ios</span><br><span class="line"></span><br><span class="line">cd webrtc-ios</span><br><span class="line"></span><br><span class="line">fetch --nohooks webrtc_ios</span><br></pre></td></tr></table></figure>
-<p>gclient sync//代码下载过程中如果发生中断，使用gclient sync同步就可以了</p>
-<ol>
-<li>编译Mac OS AppRTCMobile</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/Debug</span><br><span class="line"></span><br><span class="line">ninja -C out/Debug</span><br></pre></td></tr></table></figure>
-<ol>
-<li>编译64位真机 AppRTCMobile</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/ios_64 --args=&apos;target_os=&quot;ios&quot; target_cpu=&quot;arm64&quot;&apos;</span><br><span class="line">ninja -C out/ios_64</span><br></pre></td></tr></table></figure>
-<p>WebRTC代码后期更新的三种方式（在src目录下）：</p>
-<ol>
-<li><p>当前代码在某个分支下进行维护，使用git pull可以拉取远程仓库的最新更新；</p>
-</li>
-<li><p>当前代码不在分支下，使用git fetch取下来最新的git仓库更新；</p>
-</li>
-<li><p>需要定期更新依赖或者其他第三方库，使用gclient sync命令；</p>
-</li>
-</ol>
-<p>参考：<a href="https://webrtc.org/native-code/ios/" target="_blank" rel="external">https://webrtc.org/native-code/ios/</a></p>
-<h2 id="附录："><a href="#附录：" class="headerlink" title="附录："></a>附录：</h2><ol>
-<li>webrtc-ios版本下载过程中 $ gclient sync时出现的问题</li>
-</ol>
-<p>问题描述：</p>
-<p>出现Hook ‘download_from_google_storage –directory –recursive –num_threads=10 –no_auth –quiet –bucket chromium-webrtc-resources src/resources’ took 8760.95 secs 后，不执行了。</p>
-<p>解决办法：</p>
-<p>找到src/DEPS文件，将下面这几行代码注释掉<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Download test resources, i.e. video and audio files from Google Storage.</span></span><br><span class="line"></span><br><span class="line"> <span class="string">'pattern'</span>: <span class="string">'.'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'action'</span>: [<span class="string">'download_from_google_storage'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--directory'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--recursive'</span>,</span><br><span class="line"></span><br><span class="line">   <span class="string">'--num_threads=10'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'--no_auth'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--quiet'</span>,</span><br><span class="line"></span><br><span class="line">  <span class="string">'--bucket'</span>, <span class="string">'chromium-webrtc-resources'</span>,</span><br><span class="line"></span><br><span class="line"> <span class="string">'src/resources'</span>]</span><br><span class="line"></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>下载代码过程中遇到如下错误：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">________ running <span class="string">'download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-gn -s src/buildtools/mac/gn.sha1'</span> <span class="keyword">in</span> <span class="string">'/Users/simon/webrtc'</span></span><br><span class="line">Failed to fetch file gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b <span class="keyword">for</span> src/buildtools/mac/gn. [Err: /Library/Python/2.7/site-packages/cryptography/hazmat/backends/__init__.py:7: UserWarning: Module six was already imported from /Users/simon/code/depot_tools/external_bin/gsutil/gsutil_4.26/gsutil/third_party/six/six.py, but /Library/Python/2.7/site-packages/six-1.10.0-py2.7.egg is being added to sys.path</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>将gs://chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b中的 gs替换为 <a href="https://storage.googleapis.com/" target="_blank" rel="external">https://storage.googleapis.com/</a> 就可以直接在浏览器下载了。前提当然是你还开着翻墙代理。所以任务就变成了下载下面这个地址的文件到刚刚那个目录。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span></span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>下载 clang 等文件出错</li>
-</ol>
-<p>可以在 bash 中设置代理来解决</p>
-<ol>
-<li>gclient sync长时间不响应</li>
-</ol>
-<p>遇到如下情况长时间不响应</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">________ running <span class="string">'download_from_google_storage --no_resume --platform=darwin --no_auth --bucket chromium-luci -d src/tools/luci-go/mac64'</span> <span class="keyword">in</span> <span class="string">'/Users/simon/webrtc'</span></span><br></pre></td></tr></table></figure>
-<p>先到src/tools/luci-go/mac64找对应的 sha1文件，此处为isolate.sha1文件，文件内容为1966687828a068eee4c5da45bbb8afd91cddda6f，这个是对应文件的散列值，也是文件的标识。 google 通过luci-go标识工具的名称，用散列值标识工具的版本。</p>
-<p>然后用luci-go替换下面 url 中的chromium-gn，用 1966687828a068eee4c5da45bbb8afd91cddda6f替换c2c934d4dda1f470a6511b1015dda9a9fb1ce50b，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">原链接：</span><br><span class="line">https://storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span><br><span class="line">替换后的链接：</span><br><span class="line">https://storage.googleapis.com/chromium-gn/c2c934d4dda1f470a6511b1015dda9a9fb1ce50b</span><br></pre></td></tr></table></figure></p>
-<p>从替换后的链接出下载文件到src/tools/luci-go/mac64中，命名为isolate。然后重新执行 gclient sync 即可。</p>
-
+<p>参考：<a href="https://dev.chromium.org/developers/how-tos/install-depot-tools">https://dev.chromium.org/developers/how-tos/install-depot-tools</a><br>
       
     </div>
     
@@ -390,6 +345,10 @@
       
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2017/08/30/Webrtc 编译/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
