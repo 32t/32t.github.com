@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <title>DJ宾利烨场外价格计算</title> 
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> 
+  <script src="https://cdn.bootcss.com/pako/1.0.6/pako_inflate.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <style>
+  body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+    display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-align-items:center;
+      -ms-flex-align:center;
+          align-items:center;
+  -webkit-justify-content:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+  
+}
+tr th,td{
+    text-align: center;
+}
+
+p{;font-size:1em;font-weight:bold;font-family:"微软雅黑";}
+
+p span {
+  display:inline-block;
+  position:relative;
+  -webkit-transform-style:preserve-3d;
+          transform-style:preserve-3d;
+  -webkit-perspective:500;
+          perspective:500;
+  -webkit-font-smoothing:antialiased;
+}
+p span::before,
+p span::after {
+  display:none;
+  position:absolute;
+  top:0;
+  left:-1px;
+  -webkit-transform-origin:left top;
+      -ms-transform-origin:left top;
+          transform-origin:left top;
+  -webkit-transition:all ease-out 0.3s;
+          transition:all ease-out 0.3s;
+  content:attr(data-text);
+}
+p span::before {
+  z-index:1;
+  color:rgba(0,0,0,0.2);
+  -webkit-transform:scale(1.1, 1) skew(0deg, 20deg);
+      -ms-transform:scale(1.1, 1) skew(0deg, 20deg);
+          transform:scale(1.1, 1) skew(0deg, 20deg);
+}
+p span::after {
+  z-index:2;
+  color:#d7d1e4;
+  text-shadow:-1px 0 1px #684da3, 1px 0 1px rgba(0,0,0,0.8);
+  -webkit-transform:rotateY(-40deg);
+          transform:rotateY(-40deg);
+}
+p span:hover::before {
+  -webkit-transform:scale(1.1, 1) skew(0deg, 5deg);
+      -ms-transform:scale(1.1, 1) skew(0deg, 5deg);
+          transform:scale(1.1, 1) skew(0deg, 5deg);
+}
+p span:hover::after {
+  -webkit-transform:rotateY(-10deg);
+          transform:rotateY(-10deg);
+}
+p span + span {
+  margin-left:0.1em;
+}
+@media (min-width:20em) {
+  p {
+    font-size:2em;
+  }
+  p span::before,
+  p span::after {
+    display:block;
+  }
+}
+@media (min-width:30em) {
+  p {
+    font-size:3em;
+  }
+}
+@media (min-width:40em) {
+  p {
+    font-size:5em;
+  }
+}
+@media (min-width:60em) {
+  p {
+    font-size:8em;
+  }
+}
+
+
+  </style>
+ </head> 
+ <body>
+ 
+
+
+     <div class="table-responsive">
+       <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>币种</th>
+          <th colspan=4>火币</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="USDT">
+          <th scope="row">USDT/BTC</th>
+		  <td colspan=2>/</td>
+          <td colspan=2>/</td>
+        </tr>
+        <tr id="ETH">
+          <th scope="row">ETH</th>
+          <td>/</td>
+          <td>/</td>
+          <td>/</td>
+		  <td>/</td>
+        </tr>
+        <tr id="BTC">
+          <th scope="row">BTC</th>
+          <td>/</td>
+          <td>/</td>
+          <td>/</td>
+		  <td>/</td>
+        </tr>
+		<tr id="ETC">
+          <th scope="row">ETC</th>
+          <td>/</td>
+          <td>/</td>
+          <td>/</td>
+		  <td>/</td>
+        </tr>
+		<tr id="EOS">
+          <th scope="row">EOS</th>
+          <td>/</td>
+          <td>/</td>
+          <td>/</td>
+		  <td>/</td>
+        </tr>
+		<tr id="LTC">
+          <th scope="row">LTC</th>
+          <td>/</td>
+          <td>/</td>
+          <td>/</td>
+		  <td>/</td>
+        </tr>
+      </tbody>
+    </table>
+	
+	        <input type="text" class="form-control" id="code" name="code" placeholder="场外价格" required="" autofocus="">
+		<br />
+			        <input type="text" class="form-control" id="count" name="count" placeholder="多少个" required="" autofocus="">
+		<br />
+
+        <button class="btn btn-lg btn-primary btn-block" id="_taoli">计算</button>
+	  <div id="sb" class="alert alert-info" role="alert"></div> 
+
+      </div>
+
+	
+	
+
+
+  <script>
+!function(a,b){"function"==typeof define&&define.amd?define([],b):"undefined"!=typeof module&&module.exports?module.exports=b():a.ReconnectingWebSocket=b()}(this,function(){function a(b,c,d,e){function l(a,b){var c=document.createEvent("CustomEvent");return c.initCustomEvent(a,!1,!1,b),c}var e={debug:!1,automaticOpen:!0,reconnectInterval:1e3,maxReconnectInterval:3e4,reconnectDecay:1.5,timeoutInterval:2e3};d||(d={});for(var f in e)this[f]="undefined"!=typeof d[f]?d[f]:e[f];this.url=b,this.buff=e,this.reconnectAttempts=0,this.readyState=WebSocket.CONNECTING,this.protocol=null;var h,g=this,i=!1,j=!1,k=document.createElement("div");k.addEventListener("open",function(a){g.onopen(a)}),k.addEventListener("close",function(a){g.onclose(a)}),k.addEventListener("connecting",function(a){g.onconnecting(a)}),k.addEventListener("message",function(a){g.onmessage(a)}),k.addEventListener("error",function(a){g.onerror(a)}),this.addEventListener=k.addEventListener.bind(k),this.removeEventListener=k.removeEventListener.bind(k),this.dispatchEvent=k.dispatchEvent.bind(k),this.open=function(b){h=new WebSocket(g.url,c||[]),h.binaryType = g.buff?"arraybuffer":"",b||k.dispatchEvent(l("connecting")),(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","attempt-connect",g.url);var d=h,e=setTimeout(function(){(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","connection-timeout",g.url),j=!0,d.close(),j=!1},g.timeoutInterval);h.onopen=function(){clearTimeout(e),(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onopen",g.url),g.protocol=h.protocol,g.readyState=WebSocket.OPEN,g.reconnectAttempts=0;var d=l("open");d.isReconnect=b,b=!1,k.dispatchEvent(d)},h.onclose=function(c){if(clearTimeout(e),h=null,i)g.readyState=WebSocket.CLOSED,k.dispatchEvent(l("close"));else{g.readyState=WebSocket.CONNECTING;var d=l("connecting");d.code=c.code,d.reason=c.reason,d.wasClean=c.wasClean,k.dispatchEvent(d),b||j||((g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onclose",g.url),k.dispatchEvent(l("close")));var e=g.reconnectInterval*Math.pow(g.reconnectDecay,g.reconnectAttempts);setTimeout(function(){g.reconnectAttempts++,g.open(!0)},e>g.maxReconnectInterval?g.maxReconnectInterval:e)}},h.onmessage=function(b){(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onmessage",g.url,b.data);var c=l("message");c.data=b.data,k.dispatchEvent(c)},h.onerror=function(b){(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onerror",g.url,b),k.dispatchEvent(l("error"))}},1==this.automaticOpen&&this.open(!1),this.send=function(b){if(h)return(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","send",g.url,b),h.send(b);throw"INVALID_STATE_ERR : Pausing to reconnect websocket"},this.close=function(a,b){"undefined"==typeof a&&(a=1e3),i=!0,h&&h.close(a,b)},this.refresh=function(){h&&h.close()}}return a.prototype.onopen=function(){},a.prototype.onclose=function(){},a.prototype.onconnecting=function(){},a.prototype.onmessage=function(){},a.prototype.onerror=function(){},a.debugAll=!1,a.CONNECTING=WebSocket.CONNECTING,a.OPEN=WebSocket.OPEN,a.CLOSING=WebSocket.CLOSING,a.CLOSED=WebSocket.CLOSED,a});
+
+var Price={};
+
+
+
+$("#_taoli").click(function(){
+  var a = (Price.huobi_btc * $("#count").val()) -( $("#code").val() * $("#count").val()); 
+  $("#sb").html("火币场内OTC出售"+Price.huobi_btc * $("#count").val()+" 成本"+( $("#code").val() * $("#count").val())+"套利"+a+"元");
+});
+
+
+
+
+
+self.setInterval(function(){
+	Price.zb=6.7; 
+	$("#USDT td").eq(2).html(Price.zb);
+/*
+ajax_("http://204.44.75.108/222.php?code=zb",'jsonp',function(data){  
+	Price.zb=data.price;
+	$("#USDT td").eq(2).html(Price.zb);
+	$("#USDT td").eq(3).html(Price.zb);
+});
+	*/ 
+ajax_("https://api-otc.huobi.pro/v1/otc/trade/list/public?coinId=2&tradeType=0&currentPage=1&payWay=&country=",'json',function(data){  
+	Price.huobi_usdt_sell=data.data[1].price;
+	console.log(Price.huobi_usdt_sell)
+	$("#USDT td").eq(1).html(Price.huobi_usdt_sell);
+});
+ajax_("https://api-otc.huobi.pro/v1/otc/trade/list/public?coinId=2&tradeType=1&currentPage=1&payWay=&country=",'json',function(data){  
+	Price.huobi_usdt_buy=data.data[1].price;
+	$("#USDT td").eq(0).html(Price.huobi_usdt_buy);
+});
+
+
+},5000);
+
+function ajax_(url,type,success){
+	$.ajax({type: "get",async: false,url: url, dataType: type,success: success}); 	 
+}
+
+var ws={
+	websocket:null,
+	send:function(str){
+		this.websocket.send(str);
+	},
+	init:function(wsUrl,onopen,onmessage){
+		this.websocket = new ReconnectingWebSocket(wsUrl,null,null,true);
+		this.websocket.onerror = function() {  
+			setMessageInnerHTML("WebSocket连接发生错误");  
+		};
+		this.websocket.onopen = onopen,this.websocket.onmessage=onmessage
+		this.websocket.onclose = function() {  
+			setMessageInnerHTML("WebSocket连接关闭");  
+		}
+	}
+}
+
+
+
+try{
+	var huobi = ws.init("wss://api.huobi.pro/ws", function() {
+		this.send(huobi_symbol('btcusdt'));
+		this.send(huobi_symbol('eosusdt'));
+		this.send(huobi_symbol('ethusdt'));
+		this.send(huobi_symbol('etcusdt'));
+		this.send(huobi_symbol('ltcusdt'));
+		setMessageInnerHTML("WebSocket连接成功");  
+	},function(event) {
+		let raw_data = event.data;
+		let json = pako.inflate(raw_data,{ to: 'string' });
+		let data = JSON.parse(json);
+		if(data['ping']){
+			this.send(JSON.stringify({"pong":data['ping'] }));
+		}else{
+			if(Price.huobi_usdt_buy){
+				if(isContains(data.ch,"usdt")){
+					var dom_id = data.ch.split("usdt")[0].split(".")[1].toUpperCase();
+					$("#"+dom_id+" td").eq(0).html((data.tick.close));
+					$("#"+dom_id+" td").eq(1).html((data.tick.close*Price.huobi_usdt_buy).toFixed(4));
+
+				}
+			}
+			if(Price.huobi_usdt_sell){
+				if(isContains(data.ch,"usdt")){
+					var dom_id = data.ch.split("usdt")[0].split(".")[1].toUpperCase();
+					$("#"+dom_id+" td").eq(2).html((data.tick.close));
+					$("#"+dom_id+" td").eq(3).html((data.tick.close*Price.huobi_usdt_sell).toFixed(4));
+
+				}
+			}
+		}
+	})
+}catch (e) { 
+setMessageInnerHTML(e);
+}
+
+function huobi_symbol(symbol){
+	return (JSON.stringify({ 'sub': 'market.' + symbol + '.kline.1min', 'id': symbol }));
+}
+
+function zb_symbol(symbol){
+	return (JSON.stringify({ 'event': 'addChannel', 'channel': symbol+"_ticker" }));
+}
+
+function okex_symbol(symbol){
+	return (JSON.stringify({ 'event': 'addChannel', 'channel': "ok_sub_spot_"+symbol+"_ticker" }));
+}
+
+
+function setMessageInnerHTML(str){
+	console.log(str);
+
+}
+
+function isContains(str, substr) {
+    return str.indexOf(substr) >= 0;
+}
+
+
+</script>  
+
+ </body>
+</html>
